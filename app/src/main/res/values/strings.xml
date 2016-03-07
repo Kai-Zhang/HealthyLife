@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HealthyLife</string>
+    <string name="noiseTitle">噪音指数：</string>
+    <string name="sleepTitle">睡眠指数：</string>
+    <string name="addictionTitle">手机沉迷指数：</string>
+    <string name="sportTitle">运动指数：</string>
+    <string name="emotionTitle">心情指数：</string>
+    <string name="detailBtn">查看详细信息</string>
+    <string name="settingBtn">选项</string>
+</resources>
