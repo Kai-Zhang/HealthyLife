@@ -21,10 +21,16 @@ public class FirstOpenHandler {
     public FirstOpenHandler(Context context){
         sharedPreferenceManager=new SharedPreferenceManager(context);
         sharedPreferenceManager.add("isFirstOpen",false);
-        resources=context.getResources();
+        resources= context.getResources();
         DBdir=resources.getString(R.string.DBDir);
         filePath=DBdir+"/apps.db";
-        moveDBFile();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                moveDBFile();
+                findApp();
+            }
+        });
     }
     private void moveDBFile(){
 
@@ -56,6 +62,9 @@ public class FirstOpenHandler {
         }
         if(dbFile.exists())
             System.out.println("File exists!");
+    }
+    private void findApp(){
+
     }
 
 }
