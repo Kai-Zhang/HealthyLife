@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import com.javan.healthylife.R;
 import com.javan.healthylife.database.SharedPreferenceManager;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -16,55 +16,44 @@ import java.io.InputStream;
 public class FirstOpenHandler {
     private SharedPreferenceManager sharedPreferenceManager;
     private Resources resources;
-    private String DBdir;
-    private String filePath;
+    private FileOutputStream out;
     public FirstOpenHandler(Context context){
         sharedPreferenceManager=new SharedPreferenceManager(context);
         sharedPreferenceManager.add("isFirstOpen",false);
         resources= context.getResources();
-        DBdir=resources.getString(R.string.DBDir);
-        filePath=DBdir+"/apps.db";
+        try {
+            out=context.openFileOutput("apps.db",context.MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 moveDBFile();
                 findApp();
             }
-        });
+        }).start();
     }
     private void moveDBFile(){
 
-        InputStream is=resources.openRawResource(R.raw.apps);
-        //BufferedInputStream buf = new BufferedInputStream(is);
+        InputStream in=resources.openRawResource(R.raw.apps);
 
-        File dbFile=new File(filePath);
-        if(dbFile.exists())
-            System.out.println("File exists!");
-        else{
-            File dir=new File(DBdir);
-            if(dir.mkdirs())
-                System.out.println("mkdir succeed!");
-            else
-                System.out.println("mkdir failed!");
-        }
         try {
-            FileOutputStream fos=new FileOutputStream(dbFile);
             byte[] buffer=new byte[1024];
             int cnt;
-            while((cnt=is.read(buffer))>0)
-                fos.write(buffer,0,cnt);
-            fos.flush();
-            fos.close();
-            is.close();
+            while((cnt=in.read(buffer))>0)
+                out.write(buffer,0,cnt);
+            out.flush();
+            out.close();
+            in.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(dbFile.exists())
-            System.out.println("File exists!");
     }
-    private void findApp(){
+    private void findApp() {
 
     }
+
 
 }
