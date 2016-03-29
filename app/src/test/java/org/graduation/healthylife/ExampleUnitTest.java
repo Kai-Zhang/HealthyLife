@@ -1,4 +1,4 @@
-package com.javan.healthylife;
+package org.graduation.healthylife;
 
 import org.junit.Test;
 

@@ -2,32 +2,46 @@
 <items version="2" >
 
     <item
-        jar="E:\AndroidApplication\HealthyLife\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="E:\AndroidApplication\HealthyLife\app\build\intermediates\pre-dexed\debug\classes-3e8542e30872032288010128da4f73084c69908f.jar" />
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/classes-fdf023bfa317866907dd16bbb8cb0b352bb7897a.jar" />
     </item>
     <item
-        jar="E:\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="E:\AndroidApplication\HealthyLife\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-0ca7138ca87fbc78b79444741a34700b9c008be0.jar" />
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/classes-50949806368a4cf6322a8b62dff0c2ff34830301.jar" />
     </item>
     <item
-        jar="E:\AndroidApplication\HealthyLife\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jar="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="E:\AndroidApplication\HealthyLife\app\build\intermediates\pre-dexed\debug\classes-0c41f84bc8cf969a3ae96c9d29b9da5991f75160.jar" />
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-efc69f45e24fca7841f0bae3a710fa7eef1aecd1.jar" />
     </item>
     <item
-        jar="E:\AndroidApplication\HealthyLife\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jar="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="E:\AndroidApplication\HealthyLife\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-1ceb432b08092cab34f609accf832e0069e75dc1.jar" />
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/classes-2c6169c2af72e0200bb427ca858083df0f18bc07.jar" />
+    </item>
+    <item
+        jar="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/classes-959de9ff0fbda427a3ec3170b8f2e7080c2d709c.jar" />
+    </item>
+    <item
+        jar="/Users/zhangkai/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/zhangkai/Documents/AndroidStudioProjects/HealthyLife/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1-2c5a1de612d3fb2af89bb94cbcccb7282f70927d.jar" />
     </item>
 
 </items>

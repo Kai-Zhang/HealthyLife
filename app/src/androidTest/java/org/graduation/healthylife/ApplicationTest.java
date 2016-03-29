@@ -1,4 +1,4 @@
-package com.javan.healthylife;
+package org.graduation.healthylife;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
