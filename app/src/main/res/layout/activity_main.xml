@@ -63,8 +63,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/detailBtn"
-        android:id="@+id/detailBtn"
+        android:text="@string/permissionBtn"
+        android:id="@+id/permissonBtn"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/addictionTitle"
         android:layout_alignEnd="@+id/addictionTitle"
@@ -75,11 +75,11 @@
         android:layout_height="wrap_content"
         android:text="@string/settingBtn"
         android:id="@+id/settingBtn"
-        android:layout_alignBottom="@+id/detailBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="42dp"
-        android:layout_marginEnd="42dp" />
+        android:layout_alignTop="@+id/permissonBtn"
+        android:layout_toRightOf="@+id/addictionIndex"
+        android:layout_toEndOf="@+id/addictionIndex"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp" />
 
     <TextView
         android:layout_width="wrap_content"

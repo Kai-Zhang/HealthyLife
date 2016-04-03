@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.javan.healthylife" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.javan.healthylife">
 
     <!-- SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 向SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <!-- 读取应用使用情况权限 -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,15 +26,16 @@
         </activity>
 
         <service
-            android:name=".service.healthyService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
-        <service
             android:name=".service.HealthyService"
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <receiver
+            android:name=".Broadcast.StartServiceAlarmReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>

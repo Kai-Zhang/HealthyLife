@@ -5,8 +5,6 @@
     <string name="addictionTitle">手机沉迷指数：</string>
     <string name="sportTitle">运动指数：</string>
     <string name="emotionTitle">心情指数：</string>
-    <string name="detailBtn">查看详细信息</string>
+    <string name="permissionBtn">设置权限</string>
     <string name="settingBtn">选项</string>
-    <string name="sharedPreferencesName">healthyLifeLog</string>
-    <string name="DBDir">data/data/com.javan.monitorservice</string>
 </resources>
