@@ -12,5 +12,6 @@ public class AppUsageModel {
         this.appName=appName;
         this.packageName=packageName;
         this.foregroundTime=foregroundTime;
+        this.appType=appType;
     }
 }

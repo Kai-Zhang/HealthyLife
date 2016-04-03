@@ -51,10 +51,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InfoManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InfoManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/InfoManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.0970874">
+            <state vertical-scroll-proportion="0.0">
               <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -102,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppUsageModel.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AppUsageModel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/Model/AppUsageModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.4893204">
+              <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -1614,9 +1614,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/MLog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/FirstOpenHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/InfoHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/Model/AppUsageModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/database/SharedPreferenceManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/InfoManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/Model/AppUsageModel.java" />
       </list>
     </option>
   </component>
@@ -2885,14 +2885,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/Model/AppUsageModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/FirstOpenHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2913,13 +2905,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/controller/InfoManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0970874">
+        <state vertical-scroll-proportion="0.0">
           <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#644#645#0" expanded="true" />
             <element signature="e#680#681#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/javan/healthylife/Model/AppUsageModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4893204">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
