@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
         noiseIndex=(TextView)findViewById(R.id.noiseIndex);
         sleepIndex=(TextView)findViewById(R.id.sleepIndex);
         addictionIndex=(TextView)findViewById(R.id.addictionIndex);
-        addictionIndex.setText(""+new InfoHandler(this).getAddictionIndex());
         sportIndex=(TextView)findViewById(R.id.sportIndex);
         emotionIndex=(TextView)findViewById(R.id.emotionIndex);
+        InfoHandler infoHandler=new InfoHandler();
+        noiseIndex.setText(String.valueOf(infoHandler.getNoiseIndex()));
+        addictionIndex.setText(String.valueOf(infoHandler.getAddictionIndex()));
     }
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(new SharedPreferenceManager(this).getBoolean(FirstOpenHandler.firstOpenKey,true)){
-            new FirstOpenHandler(this).handle();
+            new FirstOpenHandler().handle();
         }
 
         PermissionManager permissionManager=new PermissionManager(this);

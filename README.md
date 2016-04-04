@@ -12,3 +12,37 @@ Your health companion in your Android phone.
 ##约定
 1. 每次提交需通过编译
 2. 如果与别人的代码出现冲突，应当交流清楚再合并
+
+##一些接口
+###1.应用使用情况
+> 暂时只支持API21及以上
+
+`InfoManager.getAppUsageInfo(long startTime,long endTime)`返回一个元素类型为`AppUsageModel`的`ArrayList`
+
+`AppUsageModel`的定义如下：
+
+	public class AppUsageModel {
+	    public String appName;//like "美团"
+	    public String packageName;//like "com.sankuai.meituan"
+	    public String appType;//like "购物"
+	    public long foregroundTime;//milliseconds
+	    public AppUsageModel(String appName,String packageName,String appType,long foregroundTime){
+	        this.appName=appName;
+	        this.packageName=packageName;
+	        this.foregroundTime=foregroundTime;
+	        this.appType=appType;
+	    }
+	}
+###2.环境噪音
+`InfoManager.getNoiseInfo(long startTime,long endTime)`返回一个元素类型为`NoiseModel`的`ArrayList`
+
+`NoiseModel`的定义如下：
+
+	public class NoiseModel {
+	    public long time;
+	    public double volume;
+	    public NoiseModel(long time,double volume){
+	        this.time=time;
+	        this.volume=volume;
+	    }
+	}

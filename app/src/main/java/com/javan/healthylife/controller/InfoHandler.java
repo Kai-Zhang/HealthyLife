@@ -3,6 +3,7 @@ package com.javan.healthylife.controller;
 import android.content.Context;
 
 import com.javan.healthylife.Model.AppUsageModel;
+import com.javan.healthylife.Model.NoiseModel;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 public class InfoHandler {
     private final String TAG="InfoHandler";
     private Context context;
-    public InfoHandler(Context context){
-        this.context=context;
+    private InfoManager infoManager;
+    public InfoHandler(){
+        context=HealthyApplication.getContext();
+        infoManager=new InfoManager();
     }
 
     public double getAddictionIndex(){
-        ArrayList<AppUsageModel> appUsageList=new InfoManager(context).getAppUsageInfo(System.currentTimeMillis()-24*60*60*1000,System.currentTimeMillis());
+        ArrayList<AppUsageModel> appUsageList=infoManager.getAppUsageInfo(System.currentTimeMillis()-24*60*60*1000,System.currentTimeMillis());
         double totalTime=0;
         if(appUsageList==null) return -1;
         for(int i=0;i<appUsageList.size();i++){
@@ -33,6 +36,17 @@ public class InfoHandler {
         if(index>100){
             index=100;
         }
+        index=((double)(int)(index*100))/100;
+        return index;
+    }
+    public double getNoiseIndex(){
+        ArrayList<NoiseModel> arrayList=infoManager.getNoiseInfo();
+        int len=arrayList.size();
+        double volumeSum=0;
+        for(int i=0;i<len;i++){
+            volumeSum+=arrayList.get(i).volume;
+        }
+        double index=volumeSum/len;
         index=((double)(int)(index*100))/100;
         return index;
     }

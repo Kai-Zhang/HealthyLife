@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 
 import com.javan.healthylife.Broadcast.StartServiceAlarmReceiver;
+import com.javan.healthylife.controller.AudioManager;
 import com.javan.healthylife.controller.CurrentAppManager;
 import com.javan.healthylife.controller.MLog;
 
@@ -43,6 +44,9 @@ public class HealthyService extends Service {
                 while(isRunning){
                     MLog.so("Service alive");
                     appUsageMonitor();
+                    //if(cnt%120==0){
+                        recordAudio();
+                    //}
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
@@ -55,6 +59,9 @@ public class HealthyService extends Service {
     }
     private void appUsageMonitor(){
 
+    }
+    private void recordAudio(){
+        new AudioManager().getAndSaveNoiseLevel();
     }
     private void setAlarm(){
         AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);

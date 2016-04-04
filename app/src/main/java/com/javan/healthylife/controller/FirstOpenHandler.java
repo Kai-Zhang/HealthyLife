@@ -27,10 +27,10 @@ public class FirstOpenHandler {
     private DatabaseManager databaseManager;
     private Resources resources;
     private Context context;
-    public FirstOpenHandler(Context context){
-        this.context=context;
+    public FirstOpenHandler(){
+        context=HealthyApplication.getContext();
         packageManager=context.getPackageManager();
-        databaseManager=new DatabaseManager(context);
+        databaseManager=new DatabaseManager();
         sharedPreferenceManager=new SharedPreferenceManager(context);
         sharedPreferenceManager.put("isFirstOpen",false);
         resources= context.getResources();
@@ -90,6 +90,4 @@ public class FirstOpenHandler {
             }
         }
     }
-
-
 }

@@ -6,8 +6,11 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 
 import com.javan.healthylife.Model.AppUsageModel;
+import com.javan.healthylife.Model.NoiseModel;
+import com.javan.healthylife.database.DatabaseManager;
 import com.javan.healthylife.database.SharedPreferenceManager;
 
 import java.util.ArrayList;
@@ -20,8 +23,8 @@ import java.util.Map;
 public class InfoManager {
     private final String TAG="InfoManager";
     private Context context;
-    public InfoManager(Context context){
-        this.context=context;
+    public InfoManager(){
+        context=HealthyApplication.getContext();
     }
     @TargetApi(21)
     public ArrayList<AppUsageModel> getAppUsageInfo(long startTime,long endTime){
@@ -51,10 +54,18 @@ public class InfoManager {
                 if(usingTime==0) continue;
                 else {
                     appUsageInfo.add(new AppUsageModel(appName,packageName,appType,usingTime));
-                    MLog.so(TAG+appName+packageName+appType+usingTime);
+                    MLog.so(TAG + appName + packageName + appType + usingTime);
                 }
             }
         }
         return appUsageInfo;
+    }
+    public ArrayList<NoiseModel> getNoiseInfo(){
+        Cursor cursor=new DatabaseManager().queryAudio(System.currentTimeMillis()-24*60*60*1000,System.currentTimeMillis());
+        ArrayList<NoiseModel> arrayList=new ArrayList<>();
+        while(cursor.moveToNext()){
+            arrayList.add(new NoiseModel(cursor.getLong(0),cursor.getDouble(1)));
+        }
+        return arrayList;
     }
 }
