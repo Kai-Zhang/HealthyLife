@@ -20,11 +20,13 @@ public class InfoHandler {
     }
 
     public double getAddictionIndex(){
-        ArrayList<AppUsageModel> appUsageList=infoManager.getAppUsageInfo(System.currentTimeMillis()-24*60*60*1000,System.currentTimeMillis());
         double totalTime=0;
-        if(appUsageList==null) return -1;
-        for(int i=0;i<appUsageList.size();i++){
-            totalTime+=appUsageList.get(i).foregroundTime;
+        ArrayList<AppUsageModel> appUsageList;
+        appUsageList = infoManager.getAppUsageInfo(0);
+        if (appUsageList == null) return -1;//api>=21 and no permission
+
+        for (int i = 0; i < appUsageList.size(); i++) {
+            totalTime += appUsageList.get(i).foregroundTime;
         }
         MLog.so("time"+totalTime);
 

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 
@@ -24,7 +25,7 @@ public class HealthyService extends Service {
         cnt=0;
         if(!isRunning) {
             isRunning=true;
-            currentAppManager=new CurrentAppManager(this);
+            currentAppManager=new CurrentAppManager();
             doTask();
         }
         return super.onStartCommand(intent, flags, startId);
@@ -58,7 +59,9 @@ public class HealthyService extends Service {
         }).start();
     }
     private void appUsageMonitor(){
-
+        if(Build.VERSION.SDK_INT>=21)
+            return;
+        currentAppManager.add();
     }
     private void recordAudio(){
         new AudioManager().getAndSaveNoiseLevel();

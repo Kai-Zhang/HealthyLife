@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
 import com.javan.healthylife.R;
 import com.javan.healthylife.database.DatabaseManager;
@@ -22,28 +23,44 @@ import java.util.List;
 public class FirstOpenHandler {
     private static final String TAG="FirstOpenHandler";
     public static final String firstOpenKey="isFirstOpen";
+    private final String firstDayKey="firstDay";
     private SharedPreferenceManager sharedPreferenceManager;
     private PackageManager packageManager;
     private DatabaseManager databaseManager;
     private Resources resources;
+    private DateManager dateManager;
     private Context context;
     public FirstOpenHandler(){
         context=HealthyApplication.getContext();
         packageManager=context.getPackageManager();
         databaseManager=new DatabaseManager();
-        sharedPreferenceManager=new SharedPreferenceManager(context);
-        sharedPreferenceManager.put("isFirstOpen",false);
+        sharedPreferenceManager=new SharedPreferenceManager();
+        sharedPreferenceManager.put(firstOpenKey,false);
         resources= context.getResources();
+        dateManager=new DateManager();
         MLog.i("dataPath", databaseManager.getAppTypeDbPath());
     }
     public void handle(){
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(Build.VERSION.SDK_INT<21) {
+                    new DatabaseManager().createTodayUsage();
+                }
+                handleDate();
+                handleAPILevel();
                 moveDBFile();
                 findApp();
             }
         }).start();
+    }
+    private void handleAPILevel(){
+        new SharedPreferenceManager().put("APIlevel",Build.VERSION.SDK_INT);
+        MLog.so("API level:"+Build.VERSION.SDK_INT);
+    }
+    private void handleDate(){
+        DateManager dateManager=new DateManager();
+        dateManager.setStartDay();
     }
     private void moveDBFile(){
         InputStream in=resources.openRawResource(R.raw.apps);

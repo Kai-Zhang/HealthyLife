@@ -4,9 +4,11 @@ import android.annotation.TargetApi;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 
 import com.javan.healthylife.Model.AppUsageModel;
 import com.javan.healthylife.Model.NoiseModel;
@@ -23,24 +25,37 @@ import java.util.Map;
 public class InfoManager {
     private final String TAG="InfoManager";
     private Context context;
+    private PackageManager packageManager;
+    private List<PackageInfo> packages;
     public InfoManager(){
         context=HealthyApplication.getContext();
+        packageManager=context.getPackageManager();
+        packages = packageManager.getInstalledPackages(0);
+    }
+    //today is 0,yesterday is -1 ,and so on
+
+    public ArrayList<AppUsageModel> getAppUsageInfo(int day){
+        if(Build.VERSION.SDK_INT>=21){
+            return getAppUsageInfo_high(day);
+        }
+        else{
+            return getAppUsageInfo_low(day);
+        }
     }
     @TargetApi(21)
-    public ArrayList<AppUsageModel> getAppUsageInfo(long startTime,long endTime){
+    private ArrayList<AppUsageModel> getAppUsageInfo_high(int day){
         MLog.d(TAG,"getAppUsageInfo");
-        PackageManager packageManager=context.getPackageManager();
+        DateManager dateManager=new DateManager();
         UsageStatsManager usageStatsManager=(UsageStatsManager)context.getSystemService(context.USAGE_STATS_SERVICE);
-        List<PackageInfo> packages = packageManager.getInstalledPackages(0);
         Map<String,UsageStats> appUsageStats=usageStatsManager.
-                queryAndAggregateUsageStats(startTime,endTime);
+                queryAndAggregateUsageStats(dateManager.getDayStartTime(day),dateManager.getDayEndTime(day));
         //Did't get permission
         if(appUsageStats.isEmpty()){
             MLog.d(TAG,"isEmpty");
             return null;
         }
         ArrayList<AppUsageModel> appUsageInfo=new ArrayList<>();
-        SharedPreferenceManager sharedPreferenceManager=new SharedPreferenceManager(context);
+        SharedPreferenceManager sharedPreferenceManager=new SharedPreferenceManager();
         //遍历安装的应用。
         //读取对应的使用时间和appName
         for(int i=0;i<packages.size();i++) {
@@ -56,6 +71,35 @@ public class InfoManager {
                     appUsageInfo.add(new AppUsageModel(appName,packageName,appType,usingTime));
                     MLog.so(TAG + appName + packageName + appType + usingTime);
                 }
+            }
+        }
+        return appUsageInfo;
+    }
+    private ArrayList<AppUsageModel> getAppUsageInfo_low(int day){
+        DatabaseManager databaseManager=new DatabaseManager();
+        ArrayList<AppUsageModel> appUsageInfo=new ArrayList<>();
+        SharedPreferenceManager sharedPreferenceManager=new SharedPreferenceManager();
+        //遍历安装的应用。
+        //读取对应的使用时间和appName
+        for(int i=0;i<packages.size();i++) {
+            PackageInfo packageInfo = packages.get(i);
+            String packageName=packageInfo.packageName;
+            ApplicationInfo applicationInfo=packageInfo.applicationInfo;
+            String appName;
+            if(applicationInfo==null){
+                appName="unknown";
+            }
+            else{
+                appName=applicationInfo.loadLabel(packageManager).toString();
+            }
+            String appType=sharedPreferenceManager.getAppType(packageName);
+            long usingTime=databaseManager.getAppUsageTime(day,packageName);
+            if(usingTime!=0){
+                appUsageInfo.add(new AppUsageModel(appName,packageName,appType,usingTime));
+                MLog.so(TAG + appName + packageName + appType + usingTime);
+            }
+            else{
+                continue;
             }
         }
         return appUsageInfo;

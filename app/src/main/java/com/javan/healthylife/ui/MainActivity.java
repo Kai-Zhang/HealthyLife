@@ -35,10 +35,17 @@ public class MainActivity extends AppCompatActivity {
         addictionIndex=(TextView)findViewById(R.id.addictionIndex);
         sportIndex=(TextView)findViewById(R.id.sportIndex);
         emotionIndex=(TextView)findViewById(R.id.emotionIndex);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         InfoHandler infoHandler=new InfoHandler();
         noiseIndex.setText(String.valueOf(infoHandler.getNoiseIndex()));
         addictionIndex.setText(String.valueOf(infoHandler.getAddictionIndex()));
     }
+
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -71,18 +78,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void taskInitial(){
-        //this is temp
-        if(Build.VERSION.SDK_INT<21){
-            finish();
-        }
-
-        if(new SharedPreferenceManager(this).getBoolean(FirstOpenHandler.firstOpenKey,true)){
+        if(new SharedPreferenceManager().getBoolean(FirstOpenHandler.firstOpenKey,true)){
             new FirstOpenHandler().handle();
         }
-
-        PermissionManager permissionManager=new PermissionManager(this);
-        if(!permissionManager.checkUsagePermission()){
-            permissionManager.getUsagePermission();
+        if(Build.VERSION.SDK_INT>=21) {
+            PermissionManager permissionManager = new PermissionManager(this);
+            if (!permissionManager.checkUsagePermission()) {
+                permissionManager.getUsagePermission();
+            }
         }
         Intent intent=new Intent(this,HealthyService.class);
         startService(intent);

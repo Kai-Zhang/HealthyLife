@@ -3,6 +3,7 @@ package com.javan.healthylife.controller;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.javan.healthylife.database.DatabaseManager;
 import com.javan.healthylife.database.SharedPreferenceManager;
 
 import java.util.List;
@@ -14,16 +15,19 @@ public class CurrentAppManager {
     private static final String TAG="CurrentAppManager";
     private ActivityManager activityManager;
     private SharedPreferenceManager sharedPreferenceManager;
-    public CurrentAppManager(Context context){
+    private DatabaseManager databaseManager;
+    private Context context;
+    public CurrentAppManager(){
+        context=HealthyApplication.getContext();
         activityManager= (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        sharedPreferenceManager=new SharedPreferenceManager(context);
+        sharedPreferenceManager=new SharedPreferenceManager();
+        databaseManager=new DatabaseManager();
     }
     public void add(){
         String[] pkgName=getCurrentApp();
         if(pkgName!=null) {
             for (int i = 0; i < pkgName.length; i++) {
-                MLog.so(TAG + " " + pkgName[i] + " is running");
-                sharedPreferenceManager.addTime(pkgName[i]);
+                databaseManager.addAppUsageTime(pkgName[i]);
             }
         }
         else{
@@ -33,10 +37,9 @@ public class CurrentAppManager {
     private  String[] getCurrentApp() {
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo processInfo : processInfos) {
-            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND&&processInfo.importanceReasonCode==0) {
                 for (int i = 0; i < processInfo.pkgList.length; i++) {
                     MLog.so(TAG + " " + processInfo.pkgList[i] + " is running");
-                    sharedPreferenceManager.addTime(processInfo.pkgList[i]);
                 }
                 return processInfo.pkgList;
             }

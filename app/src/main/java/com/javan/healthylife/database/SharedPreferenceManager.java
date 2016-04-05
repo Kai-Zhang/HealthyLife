@@ -3,6 +3,8 @@ package com.javan.healthylife.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.javan.healthylife.controller.HealthyApplication;
+
 /**
  * Created by javan on 2016/3/8.
  */
@@ -11,9 +13,9 @@ public class SharedPreferenceManager {
     private SharedPreferences.Editor editor;
 
     private static final String fileName="healthyLifeLog";
-    public static final String APILevelKey="API_Level";
-    public SharedPreferenceManager(Context context){
-        sharedPreferences=context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+
+    public SharedPreferenceManager(){
+        sharedPreferences= HealthyApplication.getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
     public SharedPreferences getSharedPreferences(){
         return sharedPreferences;
@@ -37,12 +39,6 @@ public class SharedPreferenceManager {
     public void put(String key,int value){
         editor=sharedPreferences.edit();
         editor.putInt(key, value);
-        editor.commit();
-    }
-    public void addTime(String key){
-        editor=sharedPreferences.edit();
-        int val=sharedPreferences.getInt(key,0);
-        editor.putInt(key,val+5);
         editor.commit();
     }
     public void clear(){

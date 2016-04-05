@@ -15,9 +15,10 @@ Your health companion in your Android phone.
 
 ##一些接口
 ###1.应用使用情况
-> 暂时只支持API21及以上
+> 对API Level小于21与大于等于21采取了不同的策略。结果可能有所偏差。
 
-`InfoManager.getAppUsageInfo(long startTime,long endTime)`返回一个元素类型为`AppUsageModel`的`ArrayList`
+`InfoManager.getAppUsageInfo(int day)`返回一个元素类型为`AppUsageModel`的`ArrayList`
+传入的参数代表第几天，day=0表示今天，day=-1表示昨天，以此类推。
 
 `AppUsageModel`的定义如下：
 
