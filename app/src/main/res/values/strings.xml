@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">HealthyLife</string>
     <string name="action_settings">Settings</string>
+    <string name="MainTitle">您现在的情绪如何?</string>
+    <string name="Label_Sad">悲伤</string>
+    <string name="Label_Happy">开心</string>
+    <string name="Label_Angry">生气</string>
+    <string name="Label_Content">满足</string>
+    <string name="Label_Tense">紧张</string>
+    <string name="Label_Energetic">有活力</string>
+    <string name="MainSubmit">提交</string>
 </resources>

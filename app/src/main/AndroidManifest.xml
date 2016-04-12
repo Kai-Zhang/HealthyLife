@@ -21,7 +21,8 @@
 
         <service android:name=".CollectingService" />
         <service android:name=".NotificationService" />
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".GatherAlarmReceiver" />
+        <receiver android:name=".FeedbackAlarmReceiver" />
 
     </application>
 
