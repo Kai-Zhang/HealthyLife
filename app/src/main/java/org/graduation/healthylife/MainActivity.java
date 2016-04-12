@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        startService(new Intent(this, NotificationService.class));
+        Log.d("debug message", "Started Notification Service");
         final AlarmManager alarmManager = (AlarmManager)this
                 .getSystemService(Context.ALARM_SERVICE);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
