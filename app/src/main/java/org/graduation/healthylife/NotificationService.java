@@ -19,7 +19,7 @@ public class NotificationService extends Service {
 
     @Override
     public void onCreate() {
-        Log.d("debug message", "created notification service");
+        Log.d("Notification Service", "created notification service");
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("您现在心情如何呢?")
                 .setContentText("快来告诉我你的心情吧!")

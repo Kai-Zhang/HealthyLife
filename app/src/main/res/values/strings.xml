@@ -9,4 +9,6 @@
     <string name="Label_Tense">紧张</string>
     <string name="Label_Energetic">有活力</string>
     <string name="MainSubmit">提交</string>
+    <string name="ResultHeader">感谢您的回答</string>
+    <string name="ResultContext">这对我真的很重要,谢谢配合</string>
 </resources>

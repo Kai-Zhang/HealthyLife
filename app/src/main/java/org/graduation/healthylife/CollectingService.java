@@ -17,7 +17,7 @@ public class CollectingService extends Service {
         super.onCreate();
         _collectorList = new ArrayList<>();
         // TODO Add collectors
-        Log.d("Custom Tag ", "Service started.");
+        Log.d("Collecting Service", "Service started.");
         this.collect();
         this.stopSelf();
     }
@@ -25,7 +25,7 @@ public class CollectingService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("Custom Tag ", "Service stopped.");
+        Log.d("Collecting Service", "Service stopped.");
     }
 
     @Nullable

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,85 +13,68 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/MainTitle"
         android:id="@+id/textView"
-        android:linksClickable="false"
+        android:layout_marginTop="64dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Sad"
-        android:id="@+id/radioButton"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Happy"
-        android:id="@+id/radioButton2"
-        android:layout_below="@+id/radioButton"
-        android:layout_alignLeft="@+id/radioButton"
-        android:layout_alignStart="@+id/radioButton"
-        android:layout_marginTop="16dp"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Angry"
-        android:id="@+id/radioButton3"
-        android:layout_below="@+id/radioButton2"
-        android:layout_alignLeft="@+id/radioButton2"
-        android:layout_alignStart="@+id/radioButton2"
-        android:layout_marginTop="16dp"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Content"
-        android:id="@+id/radioButton4"
-        android:layout_below="@+id/radioButton3"
-        android:layout_alignLeft="@+id/radioButton3"
-        android:layout_alignStart="@+id/radioButton3"
-        android:layout_marginTop="16dp"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Tense"
-        android:id="@+id/radioButton5"
-        android:layout_below="@+id/radioButton4"
-        android:layout_alignLeft="@+id/radioButton4"
-        android:layout_alignStart="@+id/radioButton4"
-        android:layout_marginTop="16dp"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Label_Energetic"
-        android:id="@+id/radioButton6"
-        android:layout_below="@+id/radioButton5"
-        android:layout_alignLeft="@+id/radioButton5"
-        android:layout_alignStart="@+id/radioButton5"
-        android:layout_marginTop="16dp"
-        android:checked="false" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/MainSubmit"
-        android:id="@+id/button"
-        android:layout_below="@+id/radioButton6"
+        android:id="@+id/button_submit"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="416dp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="32dp"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:id="@+id/radiogroup_main">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Sad"
+            android:id="@+id/radio_sad" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Happy"
+            android:id="@+id/radio_happy"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Angry"
+            android:id="@+id/radio_angry"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Content"
+            android:id="@+id/radio_content"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Tense"
+            android:id="@+id/radio_tense"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Label_Energetic"
+            android:id="@+id/radio_energetic"
+            android:layout_marginTop="16dp" />
+    </RadioGroup>
 
 </RelativeLayout>

@@ -9,6 +9,6 @@ public class GatherAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         context.startService(new Intent(context, CollectingService.class));
-        Log.d("Custom Tag", "Gather alarm Receiver awake.");
+        Log.d("Alarm Receiver", "Gather alarm receiver awake.");
     }
 }

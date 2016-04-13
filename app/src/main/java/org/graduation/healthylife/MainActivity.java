@@ -1,6 +1,7 @@
 package org.graduation.healthylife;
 
 import android.app.AlarmManager;
+import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioGroup;
 
 import java.util.Calendar;
 
@@ -23,29 +26,39 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final AlarmManager alarmManager = (AlarmManager)this
-                .getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent gatherPendingIntent = PendingIntent.getBroadcast(this, 0,
-                new Intent(this, GatherAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.cancel(gatherPendingIntent);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime(),
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                gatherPendingIntent);
+        Fragment fragment = new OptionFragment();
+        getFragmentManager().beginTransaction().add(R.id.layout_mainpage, fragment).commit();
 
-        final AlarmManager alarmManager2 = (AlarmManager)this
-                .getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent feedbackPendingIntent = PendingIntent.getBroadcast(this, 0,
-                new Intent(this, FeedbackAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        Calendar clock8 = Calendar.getInstance();
-        clock8.setTimeInMillis(System.currentTimeMillis());
-        clock8.set(Calendar.HOUR_OF_DAY, 8);
-        alarmManager2.cancel(feedbackPendingIntent);
-        alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP,
-                clock8.getTimeInMillis(),
-                AlarmManager.INTERVAL_HALF_DAY,
-                feedbackPendingIntent);
-        Log.d("Preparation ", "done.");
+        getLayoutInflater().inflate(R.layout.content_main, null)
+                .findViewById(R.id.button_submit)
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int checked = ((RadioGroup)v.findViewById(R.id.radiogroup_main))
+                        .getCheckedRadioButtonId();
+                if (checked == -1) {
+                    return;
+                }
+                switch (checked) {
+                    case R.id.radio_sad:
+                        break;
+                    case R.id.radio_happy:
+                        break;
+                    case R.id.radio_angry:
+                        break;
+                    case R.id.radio_content:
+                        break;
+                    case R.id.radio_tense:
+                        break;
+                    case R.id.radio_energetic:
+                }
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.layout_mainpage, new ResultFragment())
+                        .commit();
+            }
+        });
+
+        prepareServices();
     }
 
     @Override
@@ -68,5 +81,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void prepareServices() {
+        final AlarmManager alarmManager = (AlarmManager)this
+                .getSystemService(Context.ALARM_SERVICE);
+        final PendingIntent gatherPendingIntent = PendingIntent.getBroadcast(this, 0,
+                new Intent(this, GatherAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(gatherPendingIntent);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime(),
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                gatherPendingIntent);
+
+        final AlarmManager alarmManager2 = (AlarmManager)this
+                .getSystemService(Context.ALARM_SERVICE);
+        final PendingIntent feedbackPendingIntent = PendingIntent.getBroadcast(this, 0,
+                new Intent(this, FeedbackAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        Calendar clock8 = Calendar.getInstance();
+        clock8.setTimeInMillis(System.currentTimeMillis());
+        clock8.set(Calendar.HOUR_OF_DAY, 8);
+        clock8.set(Calendar.MINUTE, 0);
+        clock8.set(Calendar.SECOND, 0);
+        alarmManager2.cancel(feedbackPendingIntent);
+        alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP,
+                clock8.getTimeInMillis(),
+                AlarmManager.INTERVAL_HALF_DAY,
+                feedbackPendingIntent);
+        Log.d("Service Preparation", "done.");
     }
 }

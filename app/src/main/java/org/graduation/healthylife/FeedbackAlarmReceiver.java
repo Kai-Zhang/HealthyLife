@@ -9,6 +9,6 @@ public class FeedbackAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         context.startService(new Intent(context, NotificationService.class));
-        Log.d("Custom Tag", "Feedback alarm Receiver awake.");
+        Log.d("Alarm Receiver", "Feedback alarm receiver awake.");
     }
 }
