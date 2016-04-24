@@ -1,7 +1,6 @@
 package org.graduation.healthylife;
 
 import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioGroup;
 
 import java.util.Calendar;
 
@@ -26,37 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Fragment fragment = new OptionFragment();
-        getFragmentManager().beginTransaction().add(R.id.layout_mainpage, fragment).commit();
-
-        getLayoutInflater().inflate(R.layout.content_main, null)
-                .findViewById(R.id.button_submit)
-                .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int checked = ((RadioGroup)v.findViewById(R.id.radiogroup_main))
-                        .getCheckedRadioButtonId();
-                if (checked == -1) {
-                    return;
-                }
-                switch (checked) {
-                    case R.id.radio_sad:
-                        break;
-                    case R.id.radio_happy:
-                        break;
-                    case R.id.radio_angry:
-                        break;
-                    case R.id.radio_content:
-                        break;
-                    case R.id.radio_tense:
-                        break;
-                    case R.id.radio_energetic:
-                }
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.layout_mainpage, new ResultFragment())
-                        .commit();
-            }
-        });
+        getFragmentManager().beginTransaction()
+                .add(R.id.layout_mainpage, new OptionFragment())
+                .commit();
 
         prepareServices();
     }
