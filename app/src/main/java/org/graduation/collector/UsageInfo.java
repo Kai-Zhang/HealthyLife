@@ -19,9 +19,9 @@ public class UsageInfo {
 
     //startTime到endTime之间每个应用的使用时间，Map中的Key是应用的packageName,使用时间可以从UsageStats中获得
     //usageStats.getTotalTimeInForeground()即这个应用在前台的时间
-    @TargetApi(21)
-    private Map<String,UsageStats> getAppUsageInfo(long startTime,long endTime){
-        UsageStatsManager usageStatsManager=(UsageStatsManager)context.getSystemService(context.USAGE_STATS_SERVICE);
+    @TargetApi(android.os.Build.VERSION_CODES.LOLLIPOP_MR1)
+    public Map<String,UsageStats> getAppUsageInfo(long startTime,long endTime){
+        UsageStatsManager usageStatsManager=(UsageStatsManager)context.getSystemService(Context.USAGE_STATS_SERVICE);
         Map<String,UsageStats> appUsageStats=usageStatsManager.queryAndAggregateUsageStats(startTime, endTime);
         //Did't get permission
         if(appUsageStats.isEmpty()){

@@ -16,7 +16,7 @@ public class LightCollector implements ICollector {
     public LightCollector(Context context){
         sensorManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         sensorManager.registerListener(sensorEventListener,sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
-                ,sensorManager.SENSOR_DELAY_FASTEST);
+                , SensorManager.SENSOR_DELAY_FASTEST);
     }
     @Override
     public void collect() {
