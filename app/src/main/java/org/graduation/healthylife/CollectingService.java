@@ -9,6 +9,8 @@ import android.util.Log;
 import org.graduation.collector.AudioCollector;
 import org.graduation.collector.ICollector;
 import org.graduation.collector.LightCollector;
+import org.graduation.collector.StepCollector;
+import org.graduation.collector.WifiCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,10 @@ public class CollectingService extends Service {
     public void onCreate() {
         super.onCreate();
         _collectorList = new ArrayList<>();
-        // TODO Add collectors
         _collectorList.add(new AudioCollector());
         _collectorList.add(new LightCollector(this));
+        _collectorList.add(new WifiCollector(this));
+        _collectorList.add(new StepCollector(this));
         Log.d("Collecting Service", "Service started.");
         this.collect();
         this.stopSelf();

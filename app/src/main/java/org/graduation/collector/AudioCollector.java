@@ -27,7 +27,7 @@ public class AudioCollector implements ICollector {
                     SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT,
                     AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE);
         } catch (IllegalArgumentException e) {
-            Log.e("sound", "mAudioRecord初始化失败");
+            Log.e("sound", "mAudioRecord initialization failed");
         }
         isGetVoiceRun = true;
 
@@ -35,7 +35,7 @@ public class AudioCollector implements ICollector {
         mAudioRecord.startRecording();
         long startTime=System.currentTimeMillis();
         short[] buffer = new short[BUFFER_SIZE];
-        //r是实际读取的数据长度，一般而言r会小于buffersize
+        //r是实际读取的数据长度，一般而言r会小于buffer size
         int r = mAudioRecord.read(buffer, 0, BUFFER_SIZE);
         long v = 0;
         // 将 buffer 内容取出，进行平方和运算
@@ -51,8 +51,8 @@ public class AudioCollector implements ICollector {
         isGetVoiceRun=false;
 
         //这是时间和分贝值
-        Log.d(TAG, "时间：" + startTime);
-        Log.d(TAG , "分贝值:" + volume);
+        Log.d(TAG, "time: " + startTime);
+        Log.d(TAG, "decibel: " + volume);
 
         DatabaseManager.getDatabaseManager().saveAudio(startTime, volume);
     }
