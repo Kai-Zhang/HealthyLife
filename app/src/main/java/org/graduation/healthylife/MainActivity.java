@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.graduation.database.DatabaseManager;
+import org.graduation.database.SharedPreferenceManager;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.layout_mainpage, new OptionFragment())
                 .commit();
 
+        initDatabase();
         prepareServices();
     }
 
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void prepareServices() {
+    private void prepareServices() {
         final AlarmManager alarmManager = (AlarmManager)this
                 .getSystemService(Context.ALARM_SERVICE);
         final PendingIntent gatherPendingIntent = PendingIntent.getBroadcast(this, 0,
@@ -78,5 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_HALF_DAY,
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
+    }
+    private void initDatabase() {
+        DatabaseManager.initManager(getApplicationContext());
+        SharedPreferenceManager.initManager(getApplicationContext());
     }
 }

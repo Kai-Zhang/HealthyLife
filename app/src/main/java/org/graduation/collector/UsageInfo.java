@@ -1,6 +1,5 @@
 package org.graduation.collector;
 
-import android.annotation.TargetApi;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -17,15 +16,19 @@ public class UsageInfo {
         this.context=context;
     }
 
-    //startTime到endTime之间每个应用的使用时间，Map中的Key是应用的packageName,使用时间可以从UsageStats中获得
-    //usageStats.getTotalTimeInForeground()即这个应用在前台的时间
-    @TargetApi(android.os.Build.VERSION_CODES.LOLLIPOP_MR1)
-    public Map<String,UsageStats> getAppUsageInfo(long startTime,long endTime){
-        UsageStatsManager usageStatsManager=(UsageStatsManager)context.getSystemService(Context.USAGE_STATS_SERVICE);
-        Map<String,UsageStats> appUsageStats=usageStatsManager.queryAndAggregateUsageStats(startTime, endTime);
-        //Did't get permission
-        if(appUsageStats.isEmpty()){
-            Log.d("UsageInfo" , "Did't get permission");
+    // startTime到endTime之间每个应用的使用时间，Map中的Key是应用的packageName,使用时间可以从UsageStats中获得
+    // usageStats.getTotalTimeInForeground()即这个应用在前台的时间
+    public Map<String,UsageStats> getAppUsageInfo(long startTime,long endTime) {
+        Map<String, UsageStats> appUsageStats = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+            UsageStatsManager usageStatsManager = (UsageStatsManager)context
+                    .getSystemService(Context.USAGE_STATS_SERVICE);
+            appUsageStats = usageStatsManager
+                    .queryAndAggregateUsageStats(startTime, endTime);
+        }
+        // 权限获取失败
+        if(appUsageStats == null || appUsageStats.isEmpty()){
+            Log.d("UsageInfo", "Didn't get permission");
             return null;
         }
         return appUsageStats;

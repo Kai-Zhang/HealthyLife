@@ -7,12 +7,16 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import org.graduation.database.DatabaseManager;
+
 /**
  * Created by javan on 2016/4/25.
  */
 public class LightCollector implements ICollector {
+    private static final String TAG = "LightRecord";
     private SensorManager sensorManager;
     float light;
+
     public LightCollector(Context context){
         sensorManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         sensorManager.registerListener(sensorEventListener,sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
@@ -21,7 +25,8 @@ public class LightCollector implements ICollector {
     @Override
     public void collect() {
         //这是光照强度
-        Log.d("Light",String.valueOf(light));
+        Log.d(TAG, String.valueOf(light));
+        DatabaseManager.getDatabaseManager().saveLight(System.currentTimeMillis(), light);
     }
     public void stop(){
         sensorManager.unregisterListener(sensorEventListener);
@@ -36,7 +41,6 @@ public class LightCollector implements ICollector {
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
         }
     };
 }

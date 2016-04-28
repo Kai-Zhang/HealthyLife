@@ -5,6 +5,8 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import org.graduation.database.DatabaseManager;
+
 /**
  * Created by javan on 2016/4/25.
  */
@@ -49,7 +51,9 @@ public class AudioCollector implements ICollector {
         isGetVoiceRun=false;
 
         //这是时间和分贝值
-        Log.d(TAG,"时间："+startTime);
-        Log.d(TAG ,"分贝值:" + volume);
+        Log.d(TAG, "时间：" + startTime);
+        Log.d(TAG , "分贝值:" + volume);
+
+        DatabaseManager.getDatabaseManager().saveAudio(startTime, volume);
     }
 }
