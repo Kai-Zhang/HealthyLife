@@ -80,6 +80,23 @@ public class DatabaseManager {
         return cursor;
     }
 
+    public void saveWifi(long startTime, String ssid) {
+        ContentValues values = new ContentValues();
+        values.put("start_time", startTime);
+        values.put("ssid", ssid);
+        db.insert("wifi", null, values);
+    }
+
+    public void saveGyroSensor(long startTime, int step, float xAxis, float yAxis, float zAxis) {
+        ContentValues values = new ContentValues();
+        values.put("start_time", startTime);
+        values.put("step", step);
+        values.put("x_axis", xAxis);
+        values.put("y_axis", yAxis);
+        values.put("z_axis", zAxis);
+        db.insert("gyro", null, values);
+    }
+
     public void saveEmotion(int emotionNo, int emotion) {
         ContentValues values = new ContentValues();
         values.put("eno", emotionNo);

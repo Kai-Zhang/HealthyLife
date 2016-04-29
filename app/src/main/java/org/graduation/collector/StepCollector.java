@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import org.graduation.database.DatabaseManager;
+
 /**
  * Created by javan on 2016/4/26.
  * 步数见函数getStep()
@@ -23,6 +25,8 @@ public class StepCollector implements ICollector {
     private float mScale[] = new float[2];
     private float mYOffset;
     private static long start = 0;
+
+    private SensorEvent mLastEvent = null;
 
     /**
      * 最后加速度方向
@@ -49,8 +53,14 @@ public class StepCollector implements ICollector {
 
     @Override
     public void collect() {
-        Log.d(TAG, "step: " + String.valueOf(getStep()));
-        // TODO Save to database
+        int step = getStep();
+        Log.d(TAG, "step: " + String.valueOf(step));
+        DatabaseManager.getDatabaseManager().saveGyroSensor(
+                System.currentTimeMillis(),
+                step,
+                mLastEvent.values[0],
+                mLastEvent.values[1],
+                mLastEvent.values[2]);
     }
 
     //步数
@@ -66,6 +76,7 @@ public class StepCollector implements ICollector {
         @Override
         public void onSensorChanged(SensorEvent event) {
             Log.d(TAG, "sensor changed");
+            mLastEvent = event;
             Sensor sensor = event.sensor;
             synchronized (this) {
                 if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
