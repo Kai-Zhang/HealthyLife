@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name="service.CollectingService" />
-        <service android:name="service.NotificationService" />
-        <receiver android:name="service.GatherAlarmReceiver" />
-        <receiver android:name="service.FeedbackAlarmReceiver" />
+        <service android:name=".service.CollectingService" />
+        <service android:name=".service.NotificationService" />
+        <receiver android:name=".service.GatherAlarmReceiver" />
+        <receiver android:name=".service.FeedbackAlarmReceiver" />
 
     </application>
 

@@ -16,15 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectingService extends Service {
+    private static final String TAG = "CollectingService";
     @Override
     public void onCreate() {
         super.onCreate();
         _collectorList = new ArrayList<>();
-        //_collectorList.add(new AudioCollector());
-        //_collectorList.add(new LightCollector(this));
-        _collectorList.add(new WifiCollector(this));
-        //_collectorList.add(new StepCollector(this));
-        Log.d("Collecting Service", "Service started.");
+        _collectorList.add(new AudioCollector());
+        _collectorList.add(LightCollector.getCollector());
+        _collectorList.add(new WifiCollector());
+        _collectorList.add(StepCollector.getCollector());
+        Log.d(TAG, "Service started.");
         this.collect();
         this.stopSelf();
     }
@@ -32,7 +33,7 @@ public class CollectingService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("Collecting Service", "Service stopped.");
+        Log.d(TAG, "Service stopped.");
     }
 
     @Nullable

@@ -82,7 +82,7 @@ public class DatabaseManager {
     public void saveGyroSensor(long startTime, int step, float xAxis, float yAxis, float zAxis) {
         ContentValues values = new ContentValues();
         values.put("start_time", startTime);
-        values.put("step", step);
+        values.put("steps", step);
         values.put("x_axis", xAxis);
         values.put("y_axis", yAxis);
         values.put("z_axis", zAxis);

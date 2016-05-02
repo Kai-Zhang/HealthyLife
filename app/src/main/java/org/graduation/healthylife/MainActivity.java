@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.cancel(gatherPendingIntent);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(),
-                5 * 60 * 1000,
+                2 * 60 * 1000,
                 gatherPendingIntent);
 
         final AlarmManager alarmManager2 = (AlarmManager)this

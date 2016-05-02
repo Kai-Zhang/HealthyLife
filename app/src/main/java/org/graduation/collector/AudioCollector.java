@@ -12,13 +12,11 @@ import org.graduation.database.DatabaseManager;
  */
 public class AudioCollector implements ICollector {
     private static final String TAG = "AudioRecord";
-    static final int SAMPLE_RATE_IN_HZ = 8000;
-    static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ,
-            AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
     AudioRecord mAudioRecord = null;
     private static boolean isGetVoiceRun=false;
 
     private static int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
+    private int bufferSize = 0;
 
     public AudioRecord findAudioRecord() {
         for (int rate : mSampleRates) {
@@ -41,8 +39,10 @@ public class AudioCollector implements ICollector {
                                     audioFormat,
                                     bufferSize);
 
-                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
+                                this.bufferSize = bufferSize;
                                 return recorder;
+                            }
                         }
                     } catch (Exception e) {
                         Log.e(TAG, rate + " Exception, keep trying.");
@@ -67,9 +67,10 @@ public class AudioCollector implements ICollector {
 
         mAudioRecord.startRecording();
         long startTime=System.currentTimeMillis();
-        short[] buffer = new short[BUFFER_SIZE];
+        short[] buffer = new short[bufferSize];
         //r是实际读取的数据长度，一般而言r会小于buffer size
-        int r = mAudioRecord.read(buffer, 0, BUFFER_SIZE);
+        int r = mAudioRecord.read(buffer, 0, bufferSize);
+        Log.d(TAG, "data size " + r);
         long v = 0;
         // 将 buffer 内容取出，进行平方和运算
         for (short aBuffer : buffer) {

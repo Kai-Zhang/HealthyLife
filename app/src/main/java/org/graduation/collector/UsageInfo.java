@@ -23,8 +23,8 @@ public class UsageInfo {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
             UsageStatsManager usageStatsManager = (UsageStatsManager)context
                     .getSystemService(Context.USAGE_STATS_SERVICE);
-            appUsageStats = usageStatsManager
-                    .queryAndAggregateUsageStats(startTime, endTime);
+            appUsageStats = usageStatsManager != null ?
+                    usageStatsManager.queryAndAggregateUsageStats(startTime, endTime) : null;
         }
         // 权限获取失败
         if(appUsageStats == null || appUsageStats.isEmpty()){

@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import org.graduation.database.DatabaseManager;
+import org.graduation.healthylife.MainApplication;
 
 /**
  * Created by javan on 2016/4/25.
@@ -17,8 +18,14 @@ public class LightCollector implements ICollector {
     private SensorManager sensorManager;
     float light;
 
-    public LightCollector(Context context){
-        sensorManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
+    private static LightCollector self = new LightCollector();
+    public static LightCollector getCollector() {
+        return self;
+    }
+
+    private LightCollector(){
+        sensorManager=(SensorManager) MainApplication.getContext()
+                .getSystemService(Context.SENSOR_SERVICE);
         sensorManager.registerListener(sensorEventListener,
                 sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
                 SensorManager.SENSOR_DELAY_FASTEST);

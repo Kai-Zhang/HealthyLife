@@ -6,21 +6,18 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import org.graduation.database.DatabaseManager;
+import org.graduation.healthylife.MainApplication;
 
 import java.util.List;
 
 public class WifiCollector implements ICollector {
     private static final String TAG = "WifiRecord";
-    Context context = null;
-
-    public WifiCollector(Context context) {
-        this.context = context;
-    }
 
     @Override
     public void collect() {
         Log.d(TAG, "WiFi recording...");
-        WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) MainApplication.getContext()
+                .getSystemService(Context.WIFI_SERVICE);
         boolean on = wifiManager.isWifiEnabled();
         if (!on) {
             wifiManager.setWifiEnabled(true);
@@ -28,11 +25,9 @@ public class WifiCollector implements ICollector {
         wifiManager.startScan();
 
         List<ScanResult> results = wifiManager.getScanResults();
-        Log.d(TAG, "result size: " + results.size());
         if (!on) {
             wifiManager.setWifiEnabled(false);
         }
-        Log.d(TAG, "result size: " + results.size());
         DatabaseManager databaseManager = DatabaseManager.getDatabaseManager();
         for (ScanResult result : results) {
             Log.d(TAG, "WiFi ssid " + result.SSID);

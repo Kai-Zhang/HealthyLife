@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import org.graduation.database.DatabaseManager;
+import org.graduation.healthylife.MainApplication;
 
 /**
  * Created by javan on 2016/4/26.
@@ -26,7 +27,7 @@ public class StepCollector implements ICollector {
     private float mYOffset;
     private static long start = 0;
 
-    private SensorEvent mLastEvent = null;
+    private float mLastSensorValues[] = new float[3];
 
     /**
      * 最后加速度方向
@@ -36,34 +37,41 @@ public class StepCollector implements ICollector {
     private float mLastDiff[] = new float[3 * 2];
     private int mLastMatch = -1;
 
+    private static StepCollector self = new StepCollector();
+    public static StepCollector getCollector() {
+        return self;
+    }
+
     private SensorManager sensorManager;
-    public StepCollector(Context context){
+    private StepCollector(){
 
         int h = 480;
         mYOffset = h * 0.5f;
         mScale[0] = -(h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
         mScale[1] = -(h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
-        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) MainApplication.getContext()
+                .getSystemService(Context.SENSOR_SERVICE);
         // 注册传感器，注册监听器
         sensorManager.registerListener(sensorEventListener,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_FASTEST);
 
+        mLastSensorValues[0] = mLastSensorValues[1] = mLastSensorValues[2] = 0;
     }
 
     @Override
     public void collect() {
         int step = getStep();
         Log.d(TAG, "step: " + String.valueOf(step));
-        if (mLastEvent == null) {
-            return;
-        }
+        Log.d(TAG, "x: " + mLastSensorValues[0]
+                + ", y: " + mLastSensorValues[1]
+                + ", z: " + mLastSensorValues[2]);
         DatabaseManager.getDatabaseManager().saveGyroSensor(
                 System.currentTimeMillis(),
                 step,
-                mLastEvent.values[0],
-                mLastEvent.values[1],
-                mLastEvent.values[2]);
+                mLastSensorValues[0],
+                mLastSensorValues[1],
+                mLastSensorValues[2]);
     }
 
     //步数
@@ -78,11 +86,12 @@ public class StepCollector implements ICollector {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            Log.d(TAG, "sensor changed");
-            mLastEvent = event;
             Sensor sensor = event.sensor;
             synchronized (this) {
                 if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    mLastSensorValues[0] = event.values[0] * mScale[1];
+                    mLastSensorValues[1] = event.values[1] * mScale[1];
+                    mLastSensorValues[2] = event.values[2] * mScale[1];
                     /**
                      *原始数据是event.values[],三个数字代表三个方向的加速度
                      */
