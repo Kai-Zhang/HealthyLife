@@ -3,6 +3,8 @@ package org.graduation.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.graduation.healthylife.MainApplication;
+
 /**
  * Created by javan on 2016/3/8.
  */
@@ -11,20 +13,15 @@ public class SharedPreferenceManager {
 
     private static final String fileName="HealthyLifeLog";
 
-    private static SharedPreferenceManager self = null;
+    private static SharedPreferenceManager self = new SharedPreferenceManager();
 
     public static SharedPreferenceManager getManager() {
         return self;
     }
-    public static SharedPreferenceManager initManager(Context applicationContext) {
-        if (self == null) {
-            self = new SharedPreferenceManager(applicationContext);
-        }
-        return self;
-    }
-    private SharedPreferenceManager() { }
-    private SharedPreferenceManager(Context applicationContext){
-        sharedPreferences = applicationContext.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+
+    private SharedPreferenceManager(){
+        sharedPreferences = MainApplication.getContext()
+                .getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
     public SharedPreferences getSharedPreferences(){

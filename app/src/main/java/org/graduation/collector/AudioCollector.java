@@ -17,20 +17,53 @@ public class AudioCollector implements ICollector {
             AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
     AudioRecord mAudioRecord = null;
     private static boolean isGetVoiceRun=false;
+
+    private static int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
+
+    public AudioRecord findAudioRecord() {
+        for (int rate : mSampleRates) {
+            for (short audioFormat : new short[]
+                    { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
+                for (short channelConfig : new short[]
+                        { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
+                    try {
+                        Log.d(TAG, "Attempting rate " + rate + "Hz, bits: "
+                                + audioFormat + ", channel: " + channelConfig);
+                        int bufferSize = AudioRecord.getMinBufferSize(
+                                rate, channelConfig, audioFormat);
+
+                        if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
+                            // check if we can instantiate and have a success
+                            AudioRecord recorder = new AudioRecord(
+                                    MediaRecorder.AudioSource.DEFAULT,
+                                    rate,
+                                    channelConfig,
+                                    audioFormat,
+                                    bufferSize);
+
+                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+                                return recorder;
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, rate + " Exception, keep trying.");
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public void collect() {
         if (isGetVoiceRun) {
             return;
         }
-        try {
-            mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT,
-                    AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE);
-        } catch (IllegalArgumentException e) {
-            Log.e("sound", "mAudioRecord initialization failed");
+        mAudioRecord = findAudioRecord();
+        if (mAudioRecord == null) {
+            Log.e(TAG, "mAudioRecord initialization failed");
+            return;
         }
         isGetVoiceRun = true;
-
 
         mAudioRecord.startRecording();
         long startTime=System.currentTimeMillis();

@@ -1,4 +1,4 @@
-package org.graduation.healthylife;
+package org.graduation.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

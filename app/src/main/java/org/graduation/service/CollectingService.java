@@ -1,4 +1,4 @@
-package org.graduation.healthylife;
+package org.graduation.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -20,10 +20,10 @@ public class CollectingService extends Service {
     public void onCreate() {
         super.onCreate();
         _collectorList = new ArrayList<>();
-        _collectorList.add(new AudioCollector());
-        _collectorList.add(new LightCollector(this));
+        //_collectorList.add(new AudioCollector());
+        //_collectorList.add(new LightCollector(this));
         _collectorList.add(new WifiCollector(this));
-        _collectorList.add(new StepCollector(this));
+        //_collectorList.add(new StepCollector(this));
         Log.d("Collecting Service", "Service started.");
         this.collect();
         this.stopSelf();

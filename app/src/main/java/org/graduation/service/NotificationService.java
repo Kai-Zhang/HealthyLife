@@ -1,4 +1,4 @@
-package org.graduation.healthylife;
+package org.graduation.service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +9,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import org.graduation.healthylife.MainActivity;
+import org.graduation.healthylife.R;
 
 public class NotificationService extends Service {
     @Nullable

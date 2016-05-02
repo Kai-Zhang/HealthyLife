@@ -80,6 +80,7 @@ public class OptionFragment extends Fragment {
             int emotionId = UUID.randomUUID().toString().hashCode();
             DatabaseManager manager = DatabaseManager.getDatabaseManager();
             manager.saveEmotion(emotionId, emotion);
+            Log.d("Result Record", "save " + emotionId + ": " + emotion);
             long last = SharedPreferenceManager.getManager().getLong(LAST_RECORD_TIME, 0);
             long now = System.currentTimeMillis();
             SharedPreferenceManager.getManager().put(LAST_RECORD_TIME, now);

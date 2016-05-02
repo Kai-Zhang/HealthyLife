@@ -1,8 +1,9 @@
 package org.graduation.database;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import org.graduation.healthylife.MainApplication;
 
 /**
  * Created by javan on 2016/4/4.
@@ -36,8 +37,8 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "emotion integer,"
             + "time integer)";
 
-    public HealthyLifeDBHelper(Context applicationContext){
-        super(applicationContext, DATABASE_NAME, null, DATABASE_VERSION);
+    public HealthyLifeDBHelper(){
+        super(MainApplication.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

@@ -19,11 +19,23 @@ public class WifiCollector implements ICollector {
 
     @Override
     public void collect() {
+        Log.d(TAG, "WiFi recording...");
         WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        boolean on = wifiManager.isWifiEnabled();
+        if (!on) {
+            wifiManager.setWifiEnabled(true);
+        }
+        wifiManager.startScan();
+
         List<ScanResult> results = wifiManager.getScanResults();
+        Log.d(TAG, "result size: " + results.size());
+        if (!on) {
+            wifiManager.setWifiEnabled(false);
+        }
+        Log.d(TAG, "result size: " + results.size());
         DatabaseManager databaseManager = DatabaseManager.getDatabaseManager();
         for (ScanResult result : results) {
-            Log.d(TAG, "wifi ssid " + result.SSID);
+            Log.d(TAG, "WiFi ssid " + result.SSID);
             databaseManager.saveWifi(System.currentTimeMillis(), result.SSID);
         }
     }

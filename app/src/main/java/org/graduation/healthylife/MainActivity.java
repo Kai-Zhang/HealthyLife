@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.graduation.database.DatabaseManager;
-import org.graduation.database.SharedPreferenceManager;
+import org.graduation.service.FeedbackAlarmReceiver;
+import org.graduation.service.GatherAlarmReceiver;
 
 import java.util.Calendar;
 
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.layout_mainpage, new OptionFragment())
                 .commit();
 
-        initDatabase();
         prepareServices();
     }
 
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.cancel(gatherPendingIntent);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(),
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                5 * 60 * 1000,
                 gatherPendingIntent);
 
         final AlarmManager alarmManager2 = (AlarmManager)this
@@ -82,9 +81,5 @@ public class MainActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_HALF_DAY,
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
-    }
-    private void initDatabase() {
-        DatabaseManager.initManager(getApplicationContext());
-        SharedPreferenceManager.initManager(getApplicationContext());
     }
 }

@@ -55,6 +55,9 @@ public class StepCollector implements ICollector {
     public void collect() {
         int step = getStep();
         Log.d(TAG, "step: " + String.valueOf(step));
+        if (mLastEvent == null) {
+            return;
+        }
         DatabaseManager.getDatabaseManager().saveGyroSensor(
                 System.currentTimeMillis(),
                 step,

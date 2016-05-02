@@ -1,9 +1,10 @@
 package org.graduation.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.graduation.healthylife.MainApplication;
 
 /**
  * Created by javan on 2016/3/8.
@@ -11,30 +12,21 @@ import android.database.sqlite.SQLiteDatabase;
 public class DatabaseManager {
     public static final String appTypeDbName = "apps.db";
     private SQLiteDatabase db;
-    private Context context;
-    private static DatabaseManager self = null;
+    private static DatabaseManager self = new DatabaseManager();
 
     public static DatabaseManager getDatabaseManager() {
         return self;
     }
 
-    public static DatabaseManager initManager(Context applicationContext) {
-        if (self == null) {
-            self = new DatabaseManager(applicationContext);
-        }
-        return self;
-    }
-    private DatabaseManager() { }
-    private DatabaseManager(Context applicationContext) {
-        context = applicationContext;
-        db = new HealthyLifeDBHelper(applicationContext).getWritableDatabase();
+    private DatabaseManager() {
+        db = new HealthyLifeDBHelper().getWritableDatabase();
     }
 
     public String getAppTypeDbPath(){
-        return context.getDatabasePath(appTypeDbName).toString();
+        return MainApplication.getContext().getDatabasePath(appTypeDbName).toString();
     }
     public String getDBDirPath(){
-        return context.getDatabasePath(appTypeDbName).getParent();
+        return MainApplication.getContext().getDatabasePath(appTypeDbName).getParent();
     }
 
     public void saveAudio(long startTime, double volume) {

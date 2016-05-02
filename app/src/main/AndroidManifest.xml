@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.graduation.healthylife" >
+    package="org.graduation" >
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
+        android:name=".healthylife.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".healthylife.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -20,10 +24,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".CollectingService" />
-        <service android:name=".NotificationService" />
-        <receiver android:name=".GatherAlarmReceiver" />
-        <receiver android:name=".FeedbackAlarmReceiver" />
+        <service android:name="service.CollectingService" />
+        <service android:name="service.NotificationService" />
+        <receiver android:name="service.GatherAlarmReceiver" />
+        <receiver android:name="service.FeedbackAlarmReceiver" />
 
     </application>
 
