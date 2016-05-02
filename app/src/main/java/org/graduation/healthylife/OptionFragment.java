@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import org.graduation.R;
 import org.graduation.collector.UsageInfo;
 import org.graduation.database.DatabaseManager;
 import org.graduation.database.SharedPreferenceManager;

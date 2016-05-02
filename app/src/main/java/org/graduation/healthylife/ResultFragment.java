@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.graduation.R;
+
 public class ResultFragment extends Fragment {
     @Nullable
     @Override
