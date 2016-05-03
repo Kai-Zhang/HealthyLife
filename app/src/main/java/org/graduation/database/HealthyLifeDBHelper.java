@@ -32,6 +32,11 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "x_axis float,"
             + "y_axis float,"
             + "z_axis float)";
+    private static final String CREATE_LOCATION = "create table location ("
+            + "time integer,"
+            + "altitude float,"
+            + "longitude float,"
+            + "latitude float)";
     private static final String CREATE_EMOTION = "create table emotion ("
             + "eno integer,"
             + "emotion integer,"
@@ -48,6 +53,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_APP_USAGE);
         db.execSQL(CREATE_WIFI);
         db.execSQL(CREATE_GYRO_SENSOR);
+        db.execSQL(CREATE_LOCATION);
         db.execSQL(CREATE_EMOTION);
     }
 

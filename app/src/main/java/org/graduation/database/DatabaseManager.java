@@ -89,6 +89,15 @@ public class DatabaseManager {
         db.insert("gyro", null, values);
     }
 
+    public void saveLocation(double altitude, double longitude, double latitude) {
+        ContentValues values = new ContentValues();
+        values.put("time", System.currentTimeMillis());
+        values.put("altitude", altitude);
+        values.put("longitude", longitude);
+        values.put("latitude", latitude);
+        db.insert("location", null, values);
+    }
+
     public void saveEmotion(int emotionNo, int emotion) {
         ContentValues values = new ContentValues();
         values.put("eno", emotionNo);

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.graduation.collector.AudioCollector;
+import org.graduation.collector.GpsCollector;
 import org.graduation.collector.ICollector;
 import org.graduation.collector.LightCollector;
 import org.graduation.collector.StepCollector;
@@ -21,10 +22,11 @@ public class CollectingService extends Service {
     public void onCreate() {
         super.onCreate();
         _collectorList = new ArrayList<>();
-        _collectorList.add(new AudioCollector());
-        _collectorList.add(LightCollector.getCollector());
-        _collectorList.add(new WifiCollector());
-        _collectorList.add(StepCollector.getCollector());
+        //_collectorList.add(new AudioCollector());
+        //_collectorList.add(new WifiCollector());
+        //_collectorList.add(LightCollector.getCollector());
+        //_collectorList.add(StepCollector.getCollector());
+        _collectorList.add(GpsCollector.getCollector());
         Log.d(TAG, "Service started.");
         this.collect();
         this.stopSelf();

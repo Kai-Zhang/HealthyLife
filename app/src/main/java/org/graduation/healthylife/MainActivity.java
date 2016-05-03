@@ -1,11 +1,14 @@
 package org.graduation.healthylife;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,7 +19,9 @@ import org.graduation.R;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.layout_mainpage, new OptionFragment())
                 .commit();
 
+        checkPermission();
         prepareServices();
     }
 
@@ -82,5 +88,20 @@ public class MainActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_HALF_DAY,
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
+    }
+    private void checkPermission() {
+        List<String> requesting = new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requesting.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            requesting.add(Manifest.permission.RECORD_AUDIO);
+        }
+        if (requesting.isEmpty()) {
+            return;
+        }
+        ActivityCompat.requestPermissions(this, requesting.toArray(new String[2]), 0);
     }
 }
