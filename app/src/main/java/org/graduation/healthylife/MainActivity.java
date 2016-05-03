@@ -6,7 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.graduation.R;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,7 +64,20 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_database) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[] {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
+                }
+            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dumpDatabase();
+                }
+            }).run();
             return true;
         }
 
@@ -89,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
     }
+
     private void checkPermission() {
         List<String> requesting = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -103,5 +126,27 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         ActivityCompat.requestPermissions(this, requesting.toArray(new String[2]), 0);
+    }
+
+    private void dumpDatabase() {
+        final String SRC_DATABASE = "/data/data/org.graduation.healthylife/"
+                + "databases/HealthyLife.db";
+        final String DEST_FILE = Environment.getExternalStorageDirectory() + "/HealthyLife.db";
+        try {
+            InputStream fin = new FileInputStream(new File(SRC_DATABASE));
+            OutputStream fout = new FileOutputStream(new File(DEST_FILE));
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fin.read(buffer)) > 0) {
+                fout.write(buffer, 0, length);
+            }
+            fout.flush();
+            fin.close();
+            fout.close();
+            Toast.makeText(getBaseContext(), "数据库准备完毕", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getBaseContext(), "数据库复制失败", Toast.LENGTH_SHORT).show();
+        }
     }
 }
