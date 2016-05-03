@@ -7,12 +7,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.graduation.database.DatabaseManager;
 import org.graduation.healthylife.MainApplication;
 
 public class GpsCollector implements ICollector {
+    private static final String TAG = "GPSRecord";
     private LocationManager manager = null;
     private Location location = null;
 
@@ -34,6 +36,9 @@ public class GpsCollector implements ICollector {
     }
     @Override
     public void collect() {
+        Log.d(TAG, "location: altitude: " + (location == null ? 0 : location.getAltitude()) + ", "
+                + "longitude: " + (location == null ? 0 : location.getLongitude()) + ", "
+                + "latitude: " + (location == null ? 0 : location.getLatitude()));
         if (location == null) {
             DatabaseManager.getDatabaseManager().saveLocation(0, 0, 0);
         } else {

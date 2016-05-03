@@ -20,7 +20,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "volume real)";
     private static final String CREATE_APP_USAGE = "create table appUsage ("
             + "pkg_name text,"
-            + "period integer"
+            + "period integer,"
             + "time integer,"
             + "eno integer)";
     private static final String CREATE_WIFI = "create table wifi ("

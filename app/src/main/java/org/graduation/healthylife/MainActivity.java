@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -126,6 +127,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         ActivityCompat.requestPermissions(this, requesting.toArray(new String[2]), 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.PACKAGE_USAGE_STATS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getBaseContext(),
+                        "我们的实验需要您打开权限开关,谢谢", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+            }
+        }
     }
 
     private void dumpDatabase() {
