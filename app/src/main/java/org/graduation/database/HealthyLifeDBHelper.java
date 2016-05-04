@@ -23,6 +23,9 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "period integer,"
             + "time integer,"
             + "eno integer)";
+    private static final String CREATE_APP = "create table app ("
+            + "pkg_name text,"
+            + "time integer)";
     private static final String CREATE_WIFI = "create table wifi ("
             + "start_time integer,"
             + "ssid text)";
@@ -50,7 +53,10 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_AUDIO);
         db.execSQL(CREATE_LIGHT);
+        // appUsage table used for Lollipop MR1 and above
+        // while app used for older system
         db.execSQL(CREATE_APP_USAGE);
+        db.execSQL(CREATE_APP);
         db.execSQL(CREATE_WIFI);
         db.execSQL(CREATE_GYRO_SENSOR);
         db.execSQL(CREATE_LOCATION);

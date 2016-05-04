@@ -2,6 +2,7 @@ package org.graduation.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import org.graduation.collector.GpsCollector;
 import org.graduation.collector.ICollector;
 import org.graduation.collector.LightCollector;
 import org.graduation.collector.StepCollector;
+import org.graduation.collector.UsageCollector;
 import org.graduation.collector.WifiCollector;
 
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class CollectingService extends Service {
         //_collectorList.add(LightCollector.getCollector());
         //_collectorList.add(StepCollector.getCollector());
         _collectorList.add(GpsCollector.getCollector());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            _collectorList.add(new UsageCollector());
+        }
         Log.d(TAG, "Service started.");
         this.collect();
         this.stopSelf();

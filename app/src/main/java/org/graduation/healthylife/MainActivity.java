@@ -100,34 +100,38 @@ public class MainActivity extends AppCompatActivity {
                 .getSystemService(Context.ALARM_SERVICE);
         final PendingIntent feedbackPendingIntent = PendingIntent.getBroadcast(this, 0,
                 new Intent(this, FeedbackAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        Calendar clock8 = Calendar.getInstance();
-        clock8.setTimeInMillis(System.currentTimeMillis());
-        clock8.set(Calendar.HOUR_OF_DAY, 8);
-        clock8.set(Calendar.MINUTE, 0);
-        clock8.set(Calendar.SECOND, 0);
+        Calendar clock10 = Calendar.getInstance();
+        clock10.setTimeInMillis(System.currentTimeMillis());
+        clock10.set(Calendar.HOUR_OF_DAY, 10);
+        clock10.set(Calendar.MINUTE, 0);
+        clock10.set(Calendar.SECOND, 0);
         alarmManager2.cancel(feedbackPendingIntent);
         alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP,
-                clock8.getTimeInMillis(),
+                clock10.getTimeInMillis(),
                 AlarmManager.INTERVAL_HALF_DAY,
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
     }
 
     private void checkPermission() {
-        List<String> requesting = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            requesting.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        // Dynamically request permissions on Android 6.0 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            List<String> requesting = new ArrayList<>();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requesting.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requesting.add(Manifest.permission.RECORD_AUDIO);
+            }
+            if (requesting.isEmpty()) {
+                return;
+            }
+            ActivityCompat.requestPermissions(this, requesting.toArray(new String[2]), 0);
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            requesting.add(Manifest.permission.RECORD_AUDIO);
-        }
-        if (requesting.isEmpty()) {
-            return;
-        }
-        ActivityCompat.requestPermissions(this, requesting.toArray(new String[2]), 0);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        // Ask for usage permission on available system
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.PACKAGE_USAGE_STATS)
                     != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getBaseContext(),

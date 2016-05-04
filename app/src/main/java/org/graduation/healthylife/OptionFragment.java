@@ -1,6 +1,5 @@
 package org.graduation.healthylife;
 
-import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.usage.UsageStats;
 import android.content.Context;
@@ -75,13 +74,15 @@ public class OptionFragment extends Fragment {
         Context contextParam = null;
         private static final String LAST_RECORD_TIME = "LastRecordAt";
 
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void run() {
             int emotionId = UUID.randomUUID().toString().hashCode();
             DatabaseManager manager = DatabaseManager.getDatabaseManager();
             manager.saveEmotion(emotionId, emotion);
             Log.d("Result Record", "save " + emotionId + ": " + emotion);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                return;
+            }
             long last = SharedPreferenceManager.getManager().getLong(LAST_RECORD_TIME, 0);
             long now = System.currentTimeMillis();
             SharedPreferenceManager.getManager().put(LAST_RECORD_TIME, now);

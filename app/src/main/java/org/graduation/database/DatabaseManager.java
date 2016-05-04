@@ -72,6 +72,13 @@ public class DatabaseManager {
         return cursor;
     }
 
+    public void saveAppUsage(String pkgName) {
+        ContentValues values = new ContentValues();
+        values.put("pkg_name", pkgName);
+        values.put("time", System.currentTimeMillis());
+        db.insert("app", null, values);
+    }
+
     public void saveWifi(long startTime, String ssid) {
         ContentValues values = new ContentValues();
         values.put("start_time", startTime);
