@@ -66,7 +66,8 @@ public class GpsCollector implements ICollector {
         @Override
         public void onProviderDisabled(String provider) {
             Toast.makeText(MainApplication.getContext(), "请激活GPS", Toast.LENGTH_SHORT).show();
-            MainApplication.getContext().startActivity(new Intent(Settings.ACTION_LOCALE_SETTINGS));
+            MainApplication.getContext().startActivity(new Intent(Settings.ACTION_LOCALE_SETTINGS)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     };
 }
