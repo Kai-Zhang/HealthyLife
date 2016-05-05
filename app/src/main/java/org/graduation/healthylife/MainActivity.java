@@ -1,8 +1,11 @@
 package org.graduation.healthylife;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,6 +35,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -132,13 +136,22 @@ public class MainActivity extends AppCompatActivity {
         }
         // Ask for usage permission on available system
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.PACKAGE_USAGE_STATS)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if (!checkUsagePermission()) {
                 Toast.makeText(getBaseContext(),
                         "我们的实验需要您打开权限开关,谢谢", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
             }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private boolean checkUsagePermission() {
+        UsageStatsManager manager = (UsageStatsManager) getSystemService(
+                Context.USAGE_STATS_SERVICE);
+        Map<String, UsageStats> results = manager.queryAndAggregateUsageStats(
+                System.currentTimeMillis() - SystemClock.elapsedRealtime(),
+                System.currentTimeMillis());
+        return !results.isEmpty();
     }
 
     private void dumpDatabase() {
