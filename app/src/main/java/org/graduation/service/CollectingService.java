@@ -24,10 +24,10 @@ public class CollectingService extends Service {
     public void onCreate() {
         super.onCreate();
         _collectorList = new ArrayList<>();
-        //_collectorList.add(new AudioCollector());
-        //_collectorList.add(new WifiCollector());
-        //_collectorList.add(LightCollector.getCollector());
-        //_collectorList.add(StepCollector.getCollector());
+        _collectorList.add(new AudioCollector());
+        _collectorList.add(new WifiCollector());
+        _collectorList.add(LightCollector.getCollector());
+        _collectorList.add(StepCollector.getCollector());
         _collectorList.add(GpsCollector.getCollector());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
             _collectorList.add(new UsageCollector());

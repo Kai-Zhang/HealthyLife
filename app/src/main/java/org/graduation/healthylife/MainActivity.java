@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.cancel(gatherPendingIntent);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(),
-                2 * 60 * 1000,
+                5 * 60 * 1000,
                 gatherPendingIntent);
 
         final AlarmManager alarmManager2 = (AlarmManager)this
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.PACKAGE_USAGE_STATS)
                     != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getBaseContext(),
-                        "我们的实验需要您打开权限开关,谢谢", Toast.LENGTH_SHORT).show();
+                        "我们的实验需要您打开权限开关,谢谢", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
             }
         }
