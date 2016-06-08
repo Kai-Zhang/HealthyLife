@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">HealthyLife</string>
     <string name="action_settings">准备数据库</string>
-    <string name="MainTitle">您现在的情绪如何?</string>
-    <string name="Label_Sad">悲伤</string>
-    <string name="Label_Happy">开心</string>
-    <string name="Label_Angry">生气</string>
-    <string name="Label_Content">满足</string>
-    <string name="Label_Tense">紧张</string>
-    <string name="Label_Energetic">有活力</string>
+    <string name="MainTitle0">从上次提交情绪到现在,</string>
+    <string name="MainTitle1">您经历了哪些情绪,程度是什么?</string>
     <string name="MainSubmit">提交</string>
     <string name="ResultHeader">感谢您的回答</string>
     <string name="ResultContext">这对我真的很重要,谢谢配合</string>
+    <string name="Label_Happiness">开心/happiness</string>
+    <string name="Label_Sadness">伤心/sadness</string>
+    <string name="Label_Anger">生气/anger</string>
+    <string name="Label_Surprise">惊讶/surprise</string>
+    <string name="Label_Fear">害怕/fear</string>
+    <string name="Label_Disgust">厌恶/disgust</string>
 </resources>

@@ -42,7 +42,12 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "latitude float)";
     private static final String CREATE_EMOTION = "create table emotion ("
             + "eno integer,"
-            + "emotion integer,"
+            + "happy integer,"
+            + "sadness integer,"
+            + "anger integer,"
+            + "surprise integer,"
+            + "fear integer,"
+            + "disgust integer,"
             + "time integer)";
 
     public HealthyLifeDBHelper(){

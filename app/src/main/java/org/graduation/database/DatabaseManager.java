@@ -105,10 +105,16 @@ public class DatabaseManager {
         db.insert("location", null, values);
     }
 
-    public void saveEmotion(int emotionNo, int emotion) {
+    public void saveEmotion(int emotionNo, int happiness, int sadness,
+                            int anger, int surprise, int fear, int disgust) {
         ContentValues values = new ContentValues();
         values.put("eno", emotionNo);
-        values.put("emotion", emotion);
+        values.put("happiness", happiness);
+        values.put("sadness", sadness);
+        values.put("anger", anger);
+        values.put("surprise", surprise);
+        values.put("fear", fear);
+        values.put("disgust", disgust);
         values.put("time", System.currentTimeMillis());
         db.insert("emotion", null, values);
     }

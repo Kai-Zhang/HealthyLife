@@ -11,9 +11,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/MainTitle"
+        android:text="@string/MainTitle0"
+        android:id="@+id/textView4"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="27dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/MainTitle1"
         android:id="@+id/textView"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="96dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -24,57 +35,182 @@
         android:id="@+id/button_submit"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="416dp" />
+        android:layout_marginTop="464dp" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Happiness"
+        android:id="@+id/text_happiness"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_below="@+id/textView"
-        android:layout_marginTop="32dp"
         android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:id="@+id/radiogroup_main">
+        android:layout_alignStart="@+id/textView" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Sad"
-            android:id="@+id/radio_sad" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Sadness"
+        android:id="@+id/text_sadness"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/text_happiness"
+        android:layout_alignLeft="@+id/text_happiness"
+        android:layout_alignStart="@+id/text_happiness" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Happy"
-            android:id="@+id/radio_happy"
-            android:layout_marginTop="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Anger"
+        android:id="@+id/text_anger"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/text_sadness"
+        android:layout_alignLeft="@+id/text_sadness"
+        android:layout_alignStart="@+id/text_sadness" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Angry"
-            android:id="@+id/radio_angry"
-            android:layout_marginTop="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Surprise"
+        android:id="@+id/text_surprise"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/text_anger"
+        android:layout_alignLeft="@+id/text_anger"
+        android:layout_alignStart="@+id/text_anger" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Content"
-            android:id="@+id/radio_content"
-            android:layout_marginTop="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Fear"
+        android:id="@+id/text_fear"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/text_surprise"
+        android:layout_alignLeft="@+id/text_surprise"
+        android:layout_alignStart="@+id/text_surprise" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Tense"
-            android:id="@+id/radio_tense"
-            android:layout_marginTop="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Label_Disgust"
+        android:id="@+id/text_disgust"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/text_fear"
+        android:layout_alignLeft="@+id/text_fear"
+        android:layout_alignStart="@+id/text_fear" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Label_Energetic"
-            android:id="@+id/radio_energetic"
-            android:layout_marginTop="16dp" />
-    </RadioGroup>
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_happiness"
+        android:layout_alignTop="@+id/text_happiness"
+        android:layout_toRightOf="@+id/text_happiness"
+        android:layout_toEndOf="@+id/text_happiness"
+        android:max="3"
+        android:progress="0" />
+
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_sadness"
+        android:max="3"
+        android:layout_alignTop="@+id/text_sadness"
+        android:layout_alignLeft="@+id/seekBar_happiness"
+        android:layout_alignStart="@+id/seekBar_happiness"
+        android:progress="0" />
+
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_anger"
+        android:max="3"
+        android:progress="0"
+        android:layout_toRightOf="@+id/text_happiness"
+        android:layout_toEndOf="@+id/text_happiness"
+        android:layout_alignTop="@+id/text_anger" />
+
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_surprise"
+        android:max="3"
+        android:layout_alignTop="@+id/text_surprise"
+        android:layout_alignLeft="@+id/seekBar_anger"
+        android:layout_alignStart="@+id/seekBar_anger"
+        android:progress="0" />
+
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_fear"
+        android:max="3"
+        android:layout_alignTop="@+id/text_fear"
+        android:layout_alignLeft="@+id/seekBar_surprise"
+        android:layout_alignStart="@+id/seekBar_surprise"
+        android:progress="0" />
+
+    <SeekBar
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_disgust"
+        android:max="3"
+        android:layout_alignTop="@+id/text_disgust"
+        android:layout_alignLeft="@+id/seekBar_fear"
+        android:layout_alignStart="@+id/seekBar_fear"
+        android:progress="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_happiness"
+        android:layout_alignTop="@+id/seekBar_happiness"
+        android:layout_toRightOf="@+id/seekBar_happiness"
+        android:layout_toEndOf="@+id/seekBar_happiness" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_sadness"
+        android:layout_alignTop="@+id/seekBar_sadness"
+        android:layout_toRightOf="@+id/seekBar_sadness"
+        android:layout_toEndOf="@+id/seekBar_sadness" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_anger"
+        android:layout_alignTop="@+id/seekBar_anger"
+        android:layout_toRightOf="@+id/seekBar_anger"
+        android:layout_toEndOf="@+id/seekBar_anger" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_surprise"
+        android:layout_alignTop="@+id/seekBar_surprise"
+        android:layout_toRightOf="@+id/seekBar_surprise"
+        android:layout_toEndOf="@+id/seekBar_surprise" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_fear"
+        android:layout_alignTop="@+id/seekBar_fear"
+        android:layout_toRightOf="@+id/seekBar_fear"
+        android:layout_toEndOf="@+id/seekBar_fear" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无"
+        android:id="@+id/result_disgust"
+        android:layout_alignTop="@+id/seekBar_disgust"
+        android:layout_toRightOf="@+id/seekBar_disgust"
+        android:layout_toEndOf="@+id/seekBar_disgust" />
 
 </RelativeLayout>

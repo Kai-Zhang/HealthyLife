@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.graduation.R;
 import org.graduation.collector.UsageInfo;
@@ -24,43 +27,91 @@ public class OptionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.content_main, container, false);
+        final String[] result = {"无", "低", "中", "高"};
+        final TextView result_happiness= (TextView) (view.findViewById(R.id.result_happiness));
+        final TextView result_sadness= (TextView) (view.findViewById(R.id.result_sadness));
+        final TextView result_anger= (TextView) (view.findViewById(R.id.result_anger));
+        final TextView result_surprise= (TextView) (view.findViewById(R.id.result_surprise));
+        final TextView result_fear= (TextView) (view.findViewById(R.id.result_fear));
+        final TextView result_disgust= (TextView) (view.findViewById(R.id.result_disgust));
+        ((SeekBar) view.findViewById(R.id.seekBar_happiness))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_happiness.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        ((SeekBar) view.findViewById(R.id.seekBar_sadness))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_sadness.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        ((SeekBar) view.findViewById(R.id.seekBar_anger))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_anger.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        ((SeekBar) view.findViewById(R.id.seekBar_surprise))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_surprise.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        ((SeekBar) view.findViewById(R.id.seekBar_fear))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_fear.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        ((SeekBar) view.findViewById(R.id.seekBar_disgust))
+                .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                result_disgust.setText(result[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
         view.findViewById(R.id.button_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int checked = ((RadioGroup) view.findViewById(R.id.radiogroup_main))
-                        .getCheckedRadioButtonId();
-                if (checked == -1) {
-                    return;
-                }
-                int emotion = -1;
-                switch (checked) {
-                    case R.id.radio_sad:
-                        Log.d("onclick", "sad");
-                        emotion = 1;
-                        break;
-                    case R.id.radio_happy:
-                        Log.d("onclick", "happy");
-                        emotion = 2;
-                        break;
-                    case R.id.radio_angry:
-                        Log.d("onclick", "angry");
-                        emotion = 3;
-                        break;
-                    case R.id.radio_content:
-                        Log.d("onclick", "content");
-                        emotion = 4;
-                        break;
-                    case R.id.radio_tense:
-                        Log.d("onclick", "tense");
-                        emotion = 5;
-                        break;
-                    case R.id.radio_energetic:
-                        emotion = 6;
-                        Log.d("onclick", "energetic");
-                }
+                int happiness = ((SeekBar) view.findViewById(R.id.seekBar_happiness)).getProgress();
+                int sadness = ((SeekBar) view.findViewById(R.id.seekBar_sadness)).getProgress();
+                int anger = ((SeekBar) view.findViewById(R.id.seekBar_anger)).getProgress();
+                int surprise = ((SeekBar) view.findViewById(R.id.seekBar_surprise)).getProgress();
+                int fear = ((SeekBar) view.findViewById(R.id.seekBar_fear)).getProgress();
+                int disgust = ((SeekBar) view.findViewById(R.id.seekBar_disgust)).getProgress();
                 new Thread(new ResultRecord()
                         .setContextParam(getActivity().getApplicationContext())
-                        .setEmotion(emotion)).run();
+                        .setEmotions(happiness, sadness, anger, surprise, fear, disgust)).run();
                 getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.layout_mainpage, new ResultFragment())
                         .commit();
@@ -70,7 +121,12 @@ public class OptionFragment extends Fragment {
     }
 
     private static class ResultRecord implements Runnable {
-        int emotion = -1;
+        int happiness = -1;
+        int sadness = -1;
+        int anger = -1;
+        int surprise = -1;
+        int fear = -1;
+        int disgust = -1;
         Context contextParam = null;
         private static final String LAST_RECORD_TIME = "LastRecordAt";
 
@@ -78,8 +134,9 @@ public class OptionFragment extends Fragment {
         public void run() {
             int emotionId = UUID.randomUUID().toString().hashCode();
             DatabaseManager manager = DatabaseManager.getDatabaseManager();
-            manager.saveEmotion(emotionId, emotion);
-            Log.d("Result Record", "save " + emotionId + ": " + emotion);
+            manager.saveEmotion(emotionId, happiness, sadness, anger, surprise, fear, disgust);
+            Log.d("Result Record", "save " + emotionId + "(" + happiness + ", " + anger + ", "
+                    + surprise + ", " + fear + ", " + disgust + ")");
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 return;
             }
@@ -95,8 +152,14 @@ public class OptionFragment extends Fragment {
             }
         }
 
-        public ResultRecord setEmotion(int emotion) {
-            this.emotion = emotion;
+        public ResultRecord setEmotions(int happiness, int sadness, int anger,
+                                        int surprise, int fear, int disgust) {
+            this.happiness = happiness;
+            this.sadness = sadness;
+            this.anger = anger;
+            this.surprise = surprise;
+            this.fear = fear;
+            this.disgust = disgust;
             return this;
         }
         public ResultRecord setContextParam(Context context) {
