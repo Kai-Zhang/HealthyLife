@@ -9,8 +9,10 @@ import android.util.Log;
 
 import org.graduation.collector.AudioCollector;
 import org.graduation.collector.GpsCollector;
+import org.graduation.collector.GyroscopeCollector;
 import org.graduation.collector.ICollector;
 import org.graduation.collector.LightCollector;
+import org.graduation.collector.MagneticCollector;
 import org.graduation.collector.StepCollector;
 import org.graduation.collector.UsageCollector;
 import org.graduation.collector.WifiCollector;
@@ -29,6 +31,8 @@ public class CollectingService extends Service {
         _collectorList.add(LightCollector.getCollector());
         _collectorList.add(StepCollector.getCollector());
         _collectorList.add(GpsCollector.getCollector());
+        _collectorList.add(MagneticCollector.getCollector());
+        _collectorList.add(GyroscopeCollector.getCollector());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
             _collectorList.add(new UsageCollector());
         }

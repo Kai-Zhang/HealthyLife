@@ -24,9 +24,6 @@ public class SharedPreferenceManager {
                 .getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
-    public SharedPreferences getSharedPreferences(){
-        return sharedPreferences;
-    }
     public String getAppType(String packageName){
         return sharedPreferences.getString(packageName+"_type",null);
     }

@@ -27,7 +27,7 @@ public class StepCollector implements ICollector {
     private float mYOffset;
     private static long start = 0;
 
-    private float mLastSensorValues[] = new float[3];
+    private static float mLastSensorValues[] = new float[3];
 
     /**
      * 最后加速度方向
@@ -58,7 +58,9 @@ public class StepCollector implements ICollector {
 
         mLastSensorValues[0] = mLastSensorValues[1] = mLastSensorValues[2] = 0;
     }
-
+    public float[] getSensorValues(){
+        return mLastSensorValues;
+    }
     @Override
     public void collect() {
         int step = getStep();

@@ -31,7 +31,7 @@ public class WifiCollector implements ICollector {
         DatabaseManager databaseManager = DatabaseManager.getDatabaseManager();
         for (ScanResult result : results) {
             Log.d(TAG, "WiFi ssid " + result.SSID);
-            databaseManager.saveWifi(System.currentTimeMillis(), result.SSID);
+            databaseManager.saveWifi(System.currentTimeMillis(), result.SSID,result.BSSID,result.level);
         }
     }
 }
