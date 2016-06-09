@@ -79,10 +79,12 @@ public class DatabaseManager {
         db.insert("app", null, values);
     }
 
-    public void saveWifi(long startTime, String ssid) {
+    public void saveWifi(long startTime, String ssid,String bssid,int rssi) {
         ContentValues values = new ContentValues();
         values.put("start_time", startTime);
         values.put("ssid", ssid);
+        values.put("bssid",bssid);
+        values.put("rssi",rssi);
         db.insert("wifi", null, values);
     }
 
@@ -117,6 +119,43 @@ public class DatabaseManager {
         values.put("disgust", disgust);
         values.put("time", System.currentTimeMillis());
         db.insert("emotion", null, values);
+    }
+    public void saveMagnetic(float[] magnetic){
+        ContentValues values = new ContentValues();
+        values.put("x_magnetic",magnetic[0]);
+        values.put("y_magnetic",magnetic[1]);
+        values.put("z_magnetic",magnetic[2]);
+        values.put("time", System.currentTimeMillis());
+        db.insert("magnetic", null, values);
+    }
+    public void saveGyroscope(float[] magnetic){
+        ContentValues values = new ContentValues();
+        values.put("x_gyroscope",magnetic[0]);
+        values.put("y_gyroscope",magnetic[1]);
+        values.put("z_gyroscope",magnetic[2]);
+        values.put("time", System.currentTimeMillis());
+        db.insert("gyroscope", null, values);
+    }
+    public void saveContacts(long name,long phonenum){
+        ContentValues values = new ContentValues();
+        values.put("name",name);
+        values.put("phonenum",phonenum);
+        db.insert("contacts", null, values);
+    }
+    public void saveCalls(long time,long phonenum,int type,int duration){
+        ContentValues values = new ContentValues();
+        values.put("time",time);
+        values.put("phonenum",phonenum);
+        values.put("type",type);
+        values.put("duration", duration);
+        db.insert("calls", null, values);
+    }
+    public void saveSms(long time,long address,int type){
+        ContentValues values = new ContentValues();
+        values.put("time",time);
+        values.put("address",address);
+        values.put("type",type);
+        db.insert("sms", null, values);
     }
     public Cursor queryEmotion(long startTime, long endTime) {
         Cursor cursor = db.rawQuery("select * from emotion where time>? and time<?",

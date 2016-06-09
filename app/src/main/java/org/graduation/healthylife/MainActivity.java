@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.graduation.R;
+import org.graduation.collector.ContactCollector;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    new ContactCollector().collect();
                     dumpDatabase();
                 }
             }).run();
