@@ -16,6 +16,7 @@ import org.graduation.healthylife.MainApplication;
  * 原始数据见line67
  */
 public class StepCollector implements ICollector {
+    private static boolean isCollectOn=false;
     public static int currentStep = 0;
 
     public static final float SENSITIVITY = 10; // SENSITIVITY灵敏度
@@ -58,10 +59,7 @@ public class StepCollector implements ICollector {
 
         mLastSensorValues[0] = mLastSensorValues[1] = mLastSensorValues[2] = 0;
     }
-    public float[] getSensorValues(){
-        return mLastSensorValues;
-    }
-    @Override
+
     public void collect() {
         int step = getStep();
         Log.d(TAG, "step: " + String.valueOf(step));
@@ -81,9 +79,6 @@ public class StepCollector implements ICollector {
         return currentStep /2*3;
     }
 
-    public void stop(){
-        sensorManager.unregisterListener(sensorEventListener);
-    }
     private SensorEventListener sensorEventListener=new SensorEventListener() {
 
         @Override
@@ -138,6 +133,7 @@ public class StepCollector implements ICollector {
                     }
                     mLastDirections[k] = direction;
                     mLastValues[k] = v;
+                    if(isCollectOn) collect();
                 }
 
             }
@@ -148,4 +144,14 @@ public class StepCollector implements ICollector {
 
         }
     };
+
+    @Override
+    public void startCollect() {
+        isCollectOn=true;
+    }
+
+    @Override
+    public void stopCollect() {
+        isCollectOn=false;
+    }
 }

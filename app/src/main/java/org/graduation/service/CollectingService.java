@@ -13,6 +13,7 @@ import org.graduation.collector.GyroscopeCollector;
 import org.graduation.collector.ICollector;
 import org.graduation.collector.LightCollector;
 import org.graduation.collector.MagneticCollector;
+import org.graduation.collector.ScreenCollector;
 import org.graduation.collector.StepCollector;
 import org.graduation.collector.UsageCollector;
 import org.graduation.collector.WifiCollector;
@@ -28,6 +29,7 @@ public class CollectingService extends Service {
         _collectorList = new ArrayList<>();
         _collectorList.add(new AudioCollector());
         _collectorList.add(new WifiCollector());
+        _collectorList.add(new ScreenCollector());
         _collectorList.add(LightCollector.getCollector());
         _collectorList.add(StepCollector.getCollector());
         _collectorList.add(GpsCollector.getCollector());
@@ -37,8 +39,23 @@ public class CollectingService extends Service {
             _collectorList.add(new UsageCollector());
         }
         Log.d(TAG, "Service started.");
-        this.collect();
-        this.stopSelf();
+        collect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    for (ICollector g : _collectorList) {
+                        g.stopCollect();
+                    }
+                    stopSelf();
+                }
+            }
+        }).start();
+
     }
 
     @Override
@@ -57,7 +74,7 @@ public class CollectingService extends Service {
 
     private void collect() {
         for (ICollector g : _collectorList) {
-            g.collect();
+            g.startCollect();
         }
     }
 }

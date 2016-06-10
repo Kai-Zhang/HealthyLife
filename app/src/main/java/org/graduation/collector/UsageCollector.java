@@ -12,7 +12,6 @@ import java.util.List;
 public class UsageCollector implements ICollector {
     private static final String TAG = "UsageRecord";
 
-    @Override
     public void collect() {
         ActivityManager activityManager = (ActivityManager) MainApplication.getContext()
                 .getSystemService(Context.ACTIVITY_SERVICE);
@@ -37,5 +36,15 @@ public class UsageCollector implements ICollector {
             manager.saveAppUsage(process);
         }
         Log.d(TAG, "Found " + size + " running process");
+    }
+
+    @Override
+    public void startCollect() {
+        collect();
+    }
+
+    @Override
+    public void stopCollect() {
+
     }
 }

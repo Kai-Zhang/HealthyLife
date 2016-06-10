@@ -26,18 +26,11 @@ public class GyroscopeCollector implements ICollector {
     private GyroscopeCollector(){
         sensorManager=(SensorManager) MainApplication.getContext()
                 .getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorEventListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                SensorManager.SENSOR_DELAY_FASTEST);
     }
-    @Override
     public void collect() {
         //x,y,z三个方向的磁场强度
         Log.d(TAG, String.valueOf(gyroscope[0]) + " " + gyroscope[1] + " " + gyroscope[2]);
         DatabaseManager.getDatabaseManager().saveGyroscope(gyroscope);
-    }
-    public void stop(){
-        sensorManager.unregisterListener(sensorEventListener);
     }
     private SensorEventListener sensorEventListener=new SensorEventListener() {
         @Override
@@ -46,6 +39,7 @@ public class GyroscopeCollector implements ICollector {
                 gyroscope[0]=event.values[0];
                 gyroscope[1]=event.values[1];
                 gyroscope[2]=event.values[2];
+                collect();
             }
         }
 
@@ -53,4 +47,16 @@ public class GyroscopeCollector implements ICollector {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
+
+    @Override
+    public void startCollect() {
+        sensorManager.registerListener(sensorEventListener,
+                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+                SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    public void stopCollect() {
+        sensorManager.unregisterListener(sensorEventListener);
+    }
 }

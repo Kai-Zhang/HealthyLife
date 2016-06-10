@@ -73,6 +73,9 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             +"time integer,"//时间的hash
             +"address integer,"//对方号码的hash
             +"type integer)";//1 is incomming,2 is outgoing
+    private static final String CREATE_SCREEN="create table screen ("
+            +"time integer,"
+            +"state integer)";//0 is off,1 is on
     public HealthyLifeDBHelper(){
         super(MainApplication.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -95,6 +98,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_CONTACTS);
         db.execSQL(CREATE_CALLS);
         db.execSQL(CREATE_SMS);
+        db.execSQL(CREATE_SCREEN);
     }
 
     @Override

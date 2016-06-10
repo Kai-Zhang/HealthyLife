@@ -26,24 +26,18 @@ public class LightCollector implements ICollector {
     private LightCollector(){
         sensorManager=(SensorManager) MainApplication.getContext()
                 .getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorEventListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-                SensorManager.SENSOR_DELAY_FASTEST);
     }
-    @Override
     public void collect() {
         //这是光照强度
         Log.d(TAG, String.valueOf(light));
         DatabaseManager.getDatabaseManager().saveLight(System.currentTimeMillis(), light);
-    }
-    public void stop(){
-        sensorManager.unregisterListener(sensorEventListener);
     }
     private SensorEventListener sensorEventListener=new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if(event.sensor.getType()==Sensor.TYPE_LIGHT){
                 light=event.values[0];
+                collect();
             }
         }
 
@@ -51,4 +45,18 @@ public class LightCollector implements ICollector {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
+
+    @Override
+    public void startCollect() {
+        Log.d(TAG,"startCollect");
+        sensorManager.registerListener(sensorEventListener,
+                sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+                SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    public void stopCollect() {
+        Log.d(TAG,"stopCollect");
+        sensorManager.unregisterListener(sensorEventListener);
+    }
 }

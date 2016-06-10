@@ -13,18 +13,19 @@ import java.util.List;
 public class WifiCollector implements ICollector {
     private static final String TAG = "WifiRecord";
 
-    @Override
     public void collect() {
-        Log.d(TAG, "WiFi recording...");
+        Log.i(TAG, "WiFi recording...");
         WifiManager wifiManager = (WifiManager) MainApplication.getContext()
                 .getSystemService(Context.WIFI_SERVICE);
         boolean on = wifiManager.isWifiEnabled();
         if (!on) {
             wifiManager.setWifiEnabled(true);
         }
-        wifiManager.startScan();
-
-        List<ScanResult> results = wifiManager.getScanResults();
+        List<ScanResult> results=null;
+        while(results==null||results.size()==0) {
+            wifiManager.startScan();
+            results = wifiManager.getScanResults();
+        }
         if (!on) {
             wifiManager.setWifiEnabled(false);
         }
@@ -33,5 +34,15 @@ public class WifiCollector implements ICollector {
             Log.d(TAG, "WiFi ssid " + result.SSID);
             databaseManager.saveWifi(System.currentTimeMillis(), result.SSID,result.BSSID,result.level);
         }
+    }
+
+    @Override
+    public void startCollect() {
+        collect();
+    }
+
+    @Override
+    public void stopCollect() {
+
     }
 }

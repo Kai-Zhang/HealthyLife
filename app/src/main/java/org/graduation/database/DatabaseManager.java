@@ -36,9 +36,8 @@ public class DatabaseManager {
         db.insert("audio", null, values);
     }
     public Cursor queryAudio(long startTime, long endTime) {
-        Cursor cursor = db.rawQuery("select * from audio where start_time>? and start_time<?",
+        return db.rawQuery("select * from audio where start_time>? and start_time<?",
                 new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
-        return cursor;
     }
 
     public void saveLight(long startTime, double volume) {
@@ -48,9 +47,8 @@ public class DatabaseManager {
         db.insert("light", null, values);
     }
     public Cursor queryLight(long startTime,long endTime) {
-        Cursor cursor = db.rawQuery("select * from light where start_time>? and start_time<?",
+        return db.rawQuery("select * from light where start_time>? and start_time<?",
                 new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
-        return cursor;
     }
 
     public void saveAppUsage(String pkgName, long period, int emotionNo) {
@@ -156,6 +154,12 @@ public class DatabaseManager {
         values.put("address",address);
         values.put("type",type);
         db.insert("sms", null, values);
+    }
+    public void saveScreen(int state){
+        ContentValues values = new ContentValues();
+        values.put("time", System.currentTimeMillis());
+        values.put("state",state);
+        db.insert("screen", null, values);
     }
     public Cursor queryEmotion(long startTime, long endTime) {
         Cursor cursor = db.rawQuery("select * from emotion where time>? and time<?",

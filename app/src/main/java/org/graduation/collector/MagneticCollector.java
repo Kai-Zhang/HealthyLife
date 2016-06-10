@@ -28,18 +28,11 @@ public class MagneticCollector implements ICollector {
     private MagneticCollector(){
         sensorManager=(SensorManager) MainApplication.getContext()
                 .getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorEventListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                SensorManager.SENSOR_DELAY_FASTEST);
     }
-    @Override
     public void collect() {
         //x,y,z三个方向的磁场强度
         Log.d(TAG, String.valueOf(magnetic[0])+" "+magnetic[1]+" "+magnetic[2]);
         DatabaseManager.getDatabaseManager().saveMagnetic(magnetic);
-    }
-    public void stop(){
-        sensorManager.unregisterListener(sensorEventListener);
     }
     private SensorEventListener sensorEventListener=new SensorEventListener() {
         @Override
@@ -48,6 +41,7 @@ public class MagneticCollector implements ICollector {
                 magnetic[0]=event.values[0];
                 magnetic[1]=event.values[1];
                 magnetic[2]=event.values[2];
+                collect();
             }
         }
 
@@ -55,4 +49,16 @@ public class MagneticCollector implements ICollector {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
+
+    @Override
+    public void startCollect() {
+        sensorManager.registerListener(sensorEventListener,
+                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+                SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    public void stopCollect() {
+        sensorManager.unregisterListener(sensorEventListener);
+    }
 }

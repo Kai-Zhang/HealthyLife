@@ -1,10 +1,12 @@
 package org.graduation.collector;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -27,15 +29,9 @@ public class GpsCollector implements ICollector {
     private GpsCollector() {
         manager = (LocationManager) MainApplication.getContext()
                 .getSystemService(Context.LOCATION_SERVICE);
-        try {
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, listener);
-            manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (SecurityException e) {
-            Toast.makeText(MainApplication.getContext(), "请授予我们权限", Toast.LENGTH_SHORT).show();
-        }
     }
-    @Override
     public void collect() {
+        System.out.println("collect gps");
         Log.d(TAG, "location: altitude: " + (location == null ? 0 : location.getAltitude()) + ", "
                 + "longitude: " + (location == null ? 0 : location.getLongitude()) + ", "
                 + "latitude: " + (location == null ? 0 : location.getLatitude()));
@@ -51,6 +47,7 @@ public class GpsCollector implements ICollector {
         @Override
         public void onLocationChanged(Location loc) {
             location = loc;
+            collect();
         }
 
         @Override
@@ -70,4 +67,22 @@ public class GpsCollector implements ICollector {
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     };
+
+    @Override
+    public void startCollect() {
+        try {
+            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
+            location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            collect();
+        } catch (SecurityException e) {
+            Toast.makeText(MainApplication.getContext(), "请授予我们权限", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void stopCollect() {
+        if ( Build.VERSION.SDK_INT >= 23) MainApplication.getContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+        if(manager!=null)
+            manager.removeUpdates(listener);
+    }
 }

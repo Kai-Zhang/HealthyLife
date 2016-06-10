@@ -1,5 +1,6 @@
 package org.graduation.collector;
 
 public interface ICollector {
-    void collect();
+    void startCollect();
+    void stopCollect();
 }
