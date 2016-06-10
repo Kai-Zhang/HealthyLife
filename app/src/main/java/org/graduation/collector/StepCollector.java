@@ -66,7 +66,7 @@ public class StepCollector implements ICollector {
         Log.d(TAG, "x: " + mLastSensorValues[0]
                 + ", y: " + mLastSensorValues[1]
                 + ", z: " + mLastSensorValues[2]);
-        DatabaseManager.getDatabaseManager().saveGyroSensor(
+        DatabaseManager.getDatabaseManager().saveAcc(
                 System.currentTimeMillis(),
                 step,
                 mLastSensorValues[0],

@@ -31,7 +31,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             +"bssid text,"
             +"rssi integer"
             + "ssid text)";
-    private static final String CREATE_GYRO_SENSOR = "create table gyro ("
+    private static final String CREATE_ACC = "create table acceleration ("
             + "start_time integer,"
             + "steps integer,"
             + "x_axis float,"
@@ -44,7 +44,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "latitude float)";
     private static final String CREATE_EMOTION = "create table emotion ("
             + "eno integer,"
-            + "happy integer,"
+            + "happyness integer,"
             + "sadness integer,"
             + "anger integer,"
             + "surprise integer,"
@@ -89,7 +89,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_APP_USAGE);
         db.execSQL(CREATE_APP);
         db.execSQL(CREATE_WIFI);
-        db.execSQL(CREATE_GYRO_SENSOR);
+        db.execSQL(CREATE_ACC);
         db.execSQL(CREATE_LOCATION);
         db.execSQL(CREATE_EMOTION);
 

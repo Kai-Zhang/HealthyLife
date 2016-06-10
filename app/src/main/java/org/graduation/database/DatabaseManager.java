@@ -86,14 +86,14 @@ public class DatabaseManager {
         db.insert("wifi", null, values);
     }
 
-    public void saveGyroSensor(long startTime, int step, float xAxis, float yAxis, float zAxis) {
+    public void saveAcc(long startTime, int step, float xAxis, float yAxis, float zAxis) {
         ContentValues values = new ContentValues();
         values.put("start_time", startTime);
         values.put("steps", step);
         values.put("x_axis", xAxis);
         values.put("y_axis", yAxis);
         values.put("z_axis", zAxis);
-        db.insert("gyro", null, values);
+        db.insert("acceleration", null, values);
     }
 
     public void saveLocation(double altitude, double longitude, double latitude) {
