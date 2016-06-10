@@ -16,6 +16,8 @@ import org.graduation.healthylife.MainApplication;
 public class LightCollector implements ICollector {
     private static final String TAG = "LightRecord";
     private SensorManager sensorManager;
+    private long lastTime=0;
+    private static long MIN_TIME=100;
     float light;
 
     private static LightCollector self = new LightCollector();
@@ -29,15 +31,19 @@ public class LightCollector implements ICollector {
     }
     public void collect() {
         //这是光照强度
-        Log.d(TAG, String.valueOf(light));
+//        Log.d(TAG, String.valueOf(light));
         DatabaseManager.getDatabaseManager().saveLight(System.currentTimeMillis(), light);
     }
     private SensorEventListener sensorEventListener=new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if(event.sensor.getType()==Sensor.TYPE_LIGHT){
-                light=event.values[0];
-                collect();
+            long current=System.currentTimeMillis();
+            if(current-lastTime>MIN_TIME) {
+                lastTime = current;
+                if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+                    light = event.values[0];
+                    collect();
+                }
             }
         }
 
@@ -56,7 +62,7 @@ public class LightCollector implements ICollector {
 
     @Override
     public void stopCollect() {
-        Log.d(TAG,"stopCollect");
+        Log.d(TAG, "stopCollect");
         sensorManager.unregisterListener(sensorEventListener);
     }
 }

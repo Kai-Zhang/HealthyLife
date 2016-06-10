@@ -18,7 +18,8 @@ import org.graduation.healthylife.MainApplication;
 public class StepCollector implements ICollector {
     private static boolean isCollectOn=false;
     public static int currentStep = 0;
-
+    private long lastTime=0;
+    private static long MIN_TIME=100;
     public static final float SENSITIVITY = 10; // SENSITIVITY灵敏度
 
     private static final String TAG = "StepRecord";
@@ -62,10 +63,10 @@ public class StepCollector implements ICollector {
 
     public void collect() {
         int step = getStep();
-        Log.d(TAG, "step: " + String.valueOf(step));
-        Log.d(TAG, "x: " + mLastSensorValues[0]
-                + ", y: " + mLastSensorValues[1]
-                + ", z: " + mLastSensorValues[2]);
+//        Log.d(TAG, "step: " + String.valueOf(step));
+//        Log.d(TAG, "x: " + mLastSensorValues[0]
+//                + ", y: " + mLastSensorValues[1]
+//                + ", z: " + mLastSensorValues[2]);
         DatabaseManager.getDatabaseManager().saveAcc(
                 System.currentTimeMillis(),
                 step,
@@ -133,7 +134,11 @@ public class StepCollector implements ICollector {
                     }
                     mLastDirections[k] = direction;
                     mLastValues[k] = v;
-                    if(isCollectOn) collect();
+                    long current=System.currentTimeMillis();
+                    if(current-lastTime>MIN_TIME&&isCollectOn) {
+                        lastTime = current;
+                        collect();
+                    }
                 }
 
             }
