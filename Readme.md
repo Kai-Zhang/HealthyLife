@@ -11,7 +11,7 @@ HealthyLife
 * 当手机重启之后，需要重新运行一下应用来保证数据收集的正常进行。
 * 应用其他时间运行在后台，不会产生打扰。请不要使用各种手机管理软件改变应用的运行环境，也不要再次从设置中调整软件的权限。
 * 收集阶段持续若干天，结束后，在主界面点击选项选择准备数据库，收集数据的数据库会被复制到sd存储卡根目录下。然后可以提取出发送给我。
-* 从[这里](https://github.com/Kai-Zhang/HealthyLife/releases/download/v1.0/app-release.apk)下载安装包安装在手机上。
+* 从[这里](https://github.com/Kai-Zhang/HealthyLife/releases/download/v1.1/app-release.apk)下载安装包安装在手机上。
 
 ## 声明
 * 本应用目前收集：
@@ -19,8 +19,13 @@ HealthyLife
     * 加速度传感器信息
     * 光照传感器信息
     * GPS的原始信息，包括经度纬度海拔高度等信息
-    * 周边WiFi的SSID信息
-* 应用不会记录其他包括通话记录、联系人、短信息等敏感信息数据，数据仅用于跟随其后的情绪模型训练的研究，不用作他用。研究结束后即进行销毁。
+    * 周边WiFi的SSID,BSSID,rssi信息
+    * 陀螺仪数据(角速度)
+    * 电子罗盘数据(磁场)
+    * 通讯录，不保留原始数据，仅记录联系人姓名与号码的hashcode，[查看源码](https://github.com/Kai-Zhang/HealthyLife/blob/ekman/app/src/main/java/org/graduation/collector/ContactCollector.java)
+    * 通话记录，不保留原始数据，仅记录通话号码的hashcode，[查看源码](https://github.com/Kai-Zhang/HealthyLife/blob/ekman/app/src/main/java/org/graduation/collector/ContactCollector.java)
+    * 短信，不保留原始数据，仅记录对方号码的hashcode，[查看源码](https://github.com/Kai-Zhang/HealthyLife/blob/ekman/app/src/main/java/org/graduation/collector/ContactCollector.java)
+* 应用不会记录敏感信息数据，数据仅用于跟随其后的情绪模型训练的研究，不用作他用。研究结束后即进行销毁。
 * 应用运行损耗一定电量，虽然不大，但也仍需要注意。
 
 ## 致谢
