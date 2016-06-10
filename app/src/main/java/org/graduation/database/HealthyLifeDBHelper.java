@@ -29,8 +29,8 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
     private static final String CREATE_WIFI = "create table wifi ("
             + "start_time integer,"
             +"bssid text,"
-            +"rssi integer"
-            + "ssid text)";
+            +"rssi integer,"
+            +"ssid text)";
     private static final String CREATE_ACC = "create table acceleration ("
             + "start_time integer,"
             + "steps integer,"
@@ -44,7 +44,7 @@ public class HealthyLifeDBHelper extends SQLiteOpenHelper{
             + "latitude float)";
     private static final String CREATE_EMOTION = "create table emotion ("
             + "eno integer,"
-            + "happyness integer,"
+            + "happiness integer,"
             + "sadness integer,"
             + "anger integer,"
             + "surprise integer,"
