@@ -2,6 +2,7 @@ package org.graduation.collector;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CallLog;
@@ -48,7 +49,9 @@ public class ContactCollector {
         // 获取手机联系人
         Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,PHONES_PROJECTION, null, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
         DatabaseManager databaseManager=DatabaseManager.getDatabaseManager();
+        SQLiteDatabase db=databaseManager.getDatabase();
         if (phoneCursor != null) {
+            db.beginTransaction();
             while (phoneCursor.moveToNext()) {
                 //得到手机号码
                 String phoneNumber = phoneCursor.getString(PHONES_NUMBER_INDEX);
@@ -90,5 +93,7 @@ public class ContactCollector {
             if(type!=1&&type!=2) continue;
             databaseManager.saveSms(date,address,type);
         }
+        db.setTransactionSuccessful();
+        db.endTransaction();;
     }
 }

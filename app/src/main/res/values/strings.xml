@@ -7,9 +7,12 @@
     <string name="ResultHeader">感谢您的回答</string>
     <string name="ResultContext">这对我真的很重要,谢谢配合</string>
     <string name="Label_Happiness">开心/happiness</string>
-    <string name="Label_Sadness">伤心/sadness</string>
+    <string name="Label_Sadness">郁闷/sadness</string>
     <string name="Label_Anger">生气/anger</string>
-    <string name="Label_Surprise">惊讶/surprise</string>
+    <string name="Label_Surprise">惊奇/surprise</string>
     <string name="Label_Fear">害怕/fear</string>
-    <string name="Label_Disgust">厌恶/disgust</string>
+    <string name="Label_Disgust">嫌恶/disgust</string>
+    <string name="introduction">软件介绍</string>
+    <string name="submitTv">情绪提交</string>
+    <string name="emotionQuery">情绪查询</string>
 </resources>

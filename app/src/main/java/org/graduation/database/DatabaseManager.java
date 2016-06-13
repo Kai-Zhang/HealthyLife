@@ -28,7 +28,9 @@ public class DatabaseManager {
     public String getDBDirPath(){
         return MainApplication.getContext().getDatabasePath(appTypeDbName).getParent();
     }
-
+    public SQLiteDatabase getDatabase(){
+        return db;
+    }
     public void saveAudio(long startTime, double volume) {
         ContentValues values = new ContentValues();
         values.put("start_time",startTime);

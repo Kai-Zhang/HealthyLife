@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.graduation.R;
+import org.graduation.database.SharedPreferenceManager;
 import org.graduation.healthylife.MainActivity;
 
 public class NotificationService extends Service {
@@ -23,6 +24,13 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         Log.d("Notification Service", "created notification service");
+
+        long time = System.currentTimeMillis();
+        SharedPreferenceManager sm = SharedPreferenceManager.getManager();
+        long lastTime = sm.getLong("lasttime", 0);
+        if (time - lastTime <= 5 * 60 * 60 * 1000) {
+            return;
+        }
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("您现在心情如何呢?")
                 .setContentText("快来告诉我你的心情吧!")

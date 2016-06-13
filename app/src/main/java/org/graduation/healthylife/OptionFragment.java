@@ -1,6 +1,7 @@
 package org.graduation.healthylife;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.usage.UsageStats;
 import android.content.Context;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.graduation.R;
 import org.graduation.collector.UsageInfo;
@@ -107,12 +109,24 @@ public class OptionFragment extends Fragment {
                 int surprise = ((SeekBar) view.findViewById(R.id.seekBar_surprise)).getProgress();
                 int fear = ((SeekBar) view.findViewById(R.id.seekBar_fear)).getProgress();
                 int disgust = ((SeekBar) view.findViewById(R.id.seekBar_disgust)).getProgress();
+                long time = System.currentTimeMillis();
+                SharedPreferenceManager sm = SharedPreferenceManager.getManager();
+                long lastTime = sm.getLong("lasttime", 0);
+                if (time - lastTime <= 5 * 60 * 60 * 1000) {
+                    Toast.makeText(getActivity(), "您在5小时内提交过心情，请勿频繁提交", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                sm.put("lasttime", time);
+                int emotionCnt = sm.getInt("emotionCnt", 0);
+                emotionCnt++;
+                sm.put("emotionCnt", emotionCnt);
                 new Thread(new ResultRecord()
                         .setContextParam(getActivity().getApplicationContext())
                         .setEmotions(happiness, sadness, anger, surprise, fear, disgust)).run();
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.layout_mainpage, new ResultFragment())
-                        .commit();
+                FragmentTransaction ft=getActivity ().getFragmentManager().beginTransaction();
+                ft.replace(R.id.layout_mainpage, new ResultFragment());
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
         return view;

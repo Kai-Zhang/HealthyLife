@@ -33,6 +33,12 @@ public class SharedPreferenceManager {
     public long getLong(String key, long defValue) {
         return sharedPreferences.getLong(key, defValue);
     }
+    public int getInt(String key, int defValue) {
+        return sharedPreferences.getInt(key, defValue);
+    }
+    public String getString(String key,String defValue) {
+        return sharedPreferences.getString(key, defValue);
+    }
     public void put(String key,String value){
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString(key,value);

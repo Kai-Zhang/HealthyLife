@@ -20,10 +20,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.graduation.R;
 import org.graduation.collector.ContactCollector;
+import org.graduation.database.SharedPreferenceManager;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
 
@@ -39,7 +42,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static AlarmManager alarmManager;
+    private static PendingIntent gatherPendingIntent;
+    private static AlarmManager alarmManager2;
+    private static PendingIntent feedbackPendingIntent;
+    TextView introTv;
+    TextView submitTv;
+    TextView queryTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +59,39 @@ public class MainActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .add(R.id.layout_mainpage, new OptionFragment())
                 .commit();
+        introTv=(TextView)findViewById(R.id.introTv);
+        submitTv=(TextView)findViewById(R.id.submitTv);
+        queryTv=(TextView)findViewById(R.id.queryTv);
+        MOnClickListener mOnClickListener=new MOnClickListener();
+        introTv.setOnClickListener(mOnClickListener);
+        submitTv.setOnClickListener(mOnClickListener);
+        queryTv.setOnClickListener(mOnClickListener);
 
+        if(!hasOpened()) handleFirstOpen();
         checkPermission();
         prepareServices();
-//        screenReceiverInit();
     }
-
+    class MOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.introTv:
+                    MainActivity.this.getFragmentManager().beginTransaction().
+                            replace(R.id.layout_mainpage, new IntroFragment()).commit();
+                    break;
+                case R.id.submitTv:
+                    MainActivity.this.getFragmentManager().beginTransaction().
+                            replace(R.id.layout_mainpage,new OptionFragment()).commit();
+                    break;
+                case R.id.queryTv:
+                    MainActivity.this.getFragmentManager().beginTransaction().
+                            replace(R.id.layout_mainpage, new QueryFragment()).commit();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -82,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    new ContactCollector().collect();
                     dumpDatabase();
                 }
             }).run();
@@ -91,31 +126,52 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+    boolean hasOpened(){
+        SharedPreferenceManager sm=SharedPreferenceManager.getManager();
+        return sm.getBoolean("opened", false);
+    }
+    void handleFirstOpen(){
+        SharedPreferenceManager sm=SharedPreferenceManager.getManager();
+        sm.put("opened",true);
+        sm.put("phoneID",""+(long)(Math.random()*Long.MAX_VALUE));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new ContactCollector().collect();
+            }
+        }).run();
+    }
     private void prepareServices() {
-        final AlarmManager alarmManager = (AlarmManager)this
-                .getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent gatherPendingIntent = PendingIntent.getBroadcast(this, 0,
-                new Intent(this, GatherAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager= (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        gatherPendingIntent = PendingIntent.getBroadcast(this, 0,
+                    new Intent(this, GatherAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime(),
+                5 * 60 * 1000,
+                gatherPendingIntent);
         alarmManager.cancel(gatherPendingIntent);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(),
                 5 * 60 * 1000,
                 gatherPendingIntent);
-
-        final AlarmManager alarmManager2 = (AlarmManager)this
+        alarmManager2 = (AlarmManager)this
                 .getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent feedbackPendingIntent = PendingIntent.getBroadcast(this, 0,
+        feedbackPendingIntent = PendingIntent.getBroadcast(this, 0,
                 new Intent(this, FeedbackAlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        Calendar clock10 = Calendar.getInstance();
-        clock10.setTimeInMillis(System.currentTimeMillis());
-        clock10.set(Calendar.HOUR_OF_DAY, 10);
-        clock10.set(Calendar.MINUTE, 0);
-        clock10.set(Calendar.SECOND, 0);
+        Calendar clock = Calendar.getInstance();
+        clock.setTimeInMillis(System.currentTimeMillis());
+        clock.set(Calendar.HOUR_OF_DAY, 10);
+        clock.set(Calendar.MINUTE, 0);
+        clock.set(Calendar.SECOND, 0);
         alarmManager2.cancel(feedbackPendingIntent);
         alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP,
-                clock10.getTimeInMillis(),
+                clock.getTimeInMillis(),
                 AlarmManager.INTERVAL_HALF_DAY,
+                feedbackPendingIntent);
+        clock.set(Calendar.HOUR_OF_DAY,16);
+        alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP,
+                clock.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
                 feedbackPendingIntent);
         Log.d("Service Preparation", "done.");
     }
