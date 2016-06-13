@@ -125,7 +125,6 @@ public class OptionFragment extends Fragment {
                         .setEmotions(happiness, sadness, anger, surprise, fear, disgust)).run();
                 FragmentTransaction ft=getActivity ().getFragmentManager().beginTransaction();
                 ft.replace(R.id.layout_mainpage, new ResultFragment());
-                ft.addToBackStack(null);
                 ft.commit();
             }
         });

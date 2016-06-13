@@ -17,7 +17,8 @@ public class FtpUploader {
     private final static String addr="192.168.1.108";
     private final static int port=21;
     private final static String TAG="upload database";
-    void upload(){
+    public boolean upload(){
+        boolean result=false;
         FTPClient ftpClient=new FTPClient();
         try {
             ftpClient.connect(addr, port);
@@ -31,12 +32,12 @@ public class FtpUploader {
 
                 FileInputStream in = new FileInputStream(new File(data));
                 SharedPreferenceManager sm=SharedPreferenceManager.getManager();
-                String phoneID=sm.getString("phoneID", null);
-                int uploadID=sm.getInt("uploadID",0);
+                String phoneID = sm.getString("phoneID", null);
+                int uploadID = sm.getInt("uploadID",0);
                 String fileName="/"+phoneID+"_"+uploadID+".db";
                 Log.d(TAG,fileName);
                 sm.put("uploadID",uploadID+1);
-                boolean result = ftpClient.storeFile(fileName, in);
+                result = ftpClient.storeFile(fileName, in);
                 in.close();
                 if (result) Log.d("upload result", "succeeded");
                 else Log.d(TAG,"error code:"+result);
@@ -48,6 +49,7 @@ public class FtpUploader {
             Log.e(TAG,"error");
             e.printStackTrace();
         }
+        return result;
     }
 
 }

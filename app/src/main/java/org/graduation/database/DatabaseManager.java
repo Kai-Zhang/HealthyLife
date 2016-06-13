@@ -4,13 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.graduation.healthylife.MainApplication;
-
 /**
  * Created by javan on 2016/3/8.
  */
 public class DatabaseManager {
-    public static final String appTypeDbName = "apps.db";
     private SQLiteDatabase db;
     private static DatabaseManager self = new DatabaseManager();
 
@@ -22,14 +19,24 @@ public class DatabaseManager {
         db = new HealthyLifeDBHelper().getWritableDatabase();
     }
 
-    public String getAppTypeDbPath(){
-        return MainApplication.getContext().getDatabasePath(appTypeDbName).toString();
-    }
-    public String getDBDirPath(){
-        return MainApplication.getContext().getDatabasePath(appTypeDbName).getParent();
-    }
+
     public SQLiteDatabase getDatabase(){
         return db;
+    }
+    public void refresh(){
+        db.execSQL("delete from audio");
+        db.execSQL("delete from light");
+        db.execSQL("delete from appusage");
+        db.execSQL("delete from app");
+        db.execSQL("delete from wifi");
+        db.execSQL("delete from acceleration");
+        db.execSQL("delete from location");
+        db.execSQL("delete from magnetic");
+        db.execSQL("delete from gyroscope");
+        db.execSQL("delete from contacts");
+        db.execSQL("delete from calls");
+        db.execSQL("delete from sms");
+        db.execSQL("delete from screen");
     }
     public void saveAudio(long startTime, double volume) {
         ContentValues values = new ContentValues();
@@ -37,10 +44,7 @@ public class DatabaseManager {
         values.put("volume",volume);
         db.insert("audio", null, values);
     }
-    public Cursor queryAudio(long startTime, long endTime) {
-        return db.rawQuery("select * from audio where start_time>? and start_time<?",
-                new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
-    }
+
 
     public void saveLight(long startTime, double volume) {
         ContentValues values = new ContentValues();
@@ -48,11 +52,9 @@ public class DatabaseManager {
         values.put("volume",volume);
         db.insert("light", null, values);
     }
-    public Cursor queryLight(long startTime,long endTime) {
-        return db.rawQuery("select * from light where start_time>? and start_time<?",
-                new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
+    public Cursor queryEmotion(){
+        return db.rawQuery("select * from emotion",null);
     }
-
     public void saveAppUsage(String pkgName, long period, int emotionNo) {
         ContentValues values = new ContentValues();
         values.put("pkg_name", pkgName);
@@ -61,16 +63,7 @@ public class DatabaseManager {
         values.put("eno", emotionNo);
         db.insert("appUsage", null, values);
     }
-    public Cursor queryAppUsage(long startTime, long endTime) {
-        Cursor cursor = db.rawQuery("select * from appUsage where time>? and time<?",
-                new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
-        return cursor;
-    }
-    public Cursor queryAppUsage(long eno) {
-        Cursor cursor = db.rawQuery("select * from appUsage where eno=?",
-                new String[]{ String.valueOf(eno) });
-        return cursor;
-    }
+
 
     public void saveAppUsage(String pkgName) {
         ContentValues values = new ContentValues();
@@ -163,15 +156,6 @@ public class DatabaseManager {
         values.put("state",state);
         db.insert("screen", null, values);
     }
-    public Cursor queryEmotion(long startTime, long endTime) {
-        Cursor cursor = db.rawQuery("select * from emotion where time>? and time<?",
-                new String[]{ String.valueOf(startTime), String.valueOf(endTime) });
-        return cursor;
-    }
-    public Cursor queryEmotion(long eno) {
-        Cursor cursor = db.rawQuery("select * from emotion where eno=?",
-                new String[]{ String.valueOf(eno) });
-        return cursor;
-    }
+
 
 }

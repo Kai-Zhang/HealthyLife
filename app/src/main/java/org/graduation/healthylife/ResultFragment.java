@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.graduation.R;
-import org.graduation.database.HealthyLifeDBHelper;
+import org.graduation.database.DatabaseManager;
 import org.graduation.database.SharedPreferenceManager;
 
 public class ResultFragment extends Fragment {
@@ -26,8 +26,9 @@ public class ResultFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new FtpUploader().upload();
-                getActivity().deleteDatabase(HealthyLifeDBHelper.DATABASE_NAME);
+                if(new FtpUploader().upload()){
+                    DatabaseManager.getDatabaseManager().refresh();
+                }
             }
         }).start();
         return view;
