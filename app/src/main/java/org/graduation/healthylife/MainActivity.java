@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.graduation.R;
-import org.graduation.database.DatabaseManager;
 import org.graduation.database.SharedPreferenceManager;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
@@ -106,18 +105,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_database) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if(new FtpUploader().upload()){
-                        DatabaseManager.getDatabaseManager().refresh();
-                    }
-                }
-            }).start();
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
