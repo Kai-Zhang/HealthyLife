@@ -15,7 +15,7 @@
     <string name="introduction">软件介绍</string>
     <string name="submitTv">情绪提交</string>
     <string name="emotionQuery">情绪查询</string>
-    <string name="emotionQueryTitle">&#032;&#032;&#032;ID 开心 郁闷 生气 惊奇 害怕 嫌恶</string>
+    <string name="emotionQueryTitle">ID 开心 郁闷 生气 惊奇 害怕 嫌恶</string>
     <string name="introText">本应用主要用于收集用户数据.\n该数据将用于预测用户情绪的研究工作.\n
         本应用应当每天10am,4pm,10pm三次提醒用户记录心情。但可能由于被管理软件清理而不能发出提醒。\n
         如果发生这样的情况，希望用户能够主动记录心情数据。但两次记录数据间隔不得低于五小时。\n

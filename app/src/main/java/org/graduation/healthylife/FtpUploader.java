@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by javan on 2016/6/13.
  */
 public class FtpUploader {
-    private final static String addr="192.168.1.108";
+    private final static String addr="114.212.84.179";
     private final static int port=21;
     private final static String TAG="upload database";
     public boolean upload(){
@@ -23,7 +23,7 @@ public class FtpUploader {
         try {
             ftpClient.connect(addr, port);
             Log.d(TAG,"connected");
-            if (ftpClient.login("anonymous","anonymous"))
+            if (ftpClient.login("testftp","test"))
             {
                 ftpClient.enterLocalPassiveMode(); // important!
                 ftpClient.setFileType(FTP.BINARY_FILE_TYPE);

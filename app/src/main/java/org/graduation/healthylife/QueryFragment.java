@@ -25,7 +25,7 @@ public class QueryFragment extends Fragment{
         Cursor cursor= DatabaseManager.getDatabaseManager().queryEmotion();
         int cnt=1;
         while(cursor.moveToNext()){
-            text+="   "+cnt+"  ";
+            text+="   "+cnt;
             for(int i=1;i<=6;i++){
                 text+="     ";
                 int emotion=cursor.getInt(i);
@@ -35,6 +35,7 @@ public class QueryFragment extends Fragment{
                 else if(emotion==3) text+="高";
             }
             text+="\n";
+            cnt++;
         }
         textView.setText(text);
         return view;

@@ -6,7 +6,7 @@
         jumboMode="false"
         revision="23.0.2"
         sha1="342fc284019f590e1308056990fdb24a08f06318">
-        <dex dex="E:\AndroidApplication\HealthyLife_collector\HealthyLife\app\build\intermediates\pre-dexed\debug\commons-net-3.5-ed3525baf7fa2cee5d7dea7d42aa8127e15857fd.jar" />
+        <dex dex="E:\AndroidApplication\HealthyLife_collector\HealthyLife\app\build\intermediates\pre-dexed\release\commons-net-3.5-ed3525baf7fa2cee5d7dea7d42aa8127e15857fd.jar" />
     </item>
 
 </items>
