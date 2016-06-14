@@ -1,9 +1,12 @@
 package org.graduation.healthylife;
 
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.graduation.database.DatabaseManager;
 import org.graduation.database.SharedPreferenceManager;
 
 import java.io.File;
@@ -36,11 +39,16 @@ public class FtpUploader {
                 int uploadID = sm.getInt("uploadID",0);
                 String fileName="/"+phoneID+"_"+uploadID+".db";
                 Log.d(TAG,fileName);
-                sm.put("uploadID",uploadID+1);
+                sm.put("uploadID", uploadID + 1);
                 result = ftpClient.storeFile(fileName, in);
                 in.close();
-                if (result) Log.d("upload result", "succeeded");
-                else Log.d(TAG,"error code:"+result);
+                Looper.prepare();
+                if (result){
+                    Toast.makeText(MainApplication.getContext(), "HealthyLife:Upload succeed", Toast.LENGTH_SHORT).show();
+                    DatabaseManager.getDatabaseManager().refresh();
+                }
+                else Toast.makeText(MainApplication.getContext(), "HealthyLife:Upload failed", Toast.LENGTH_SHORT).show();
+                Looper.loop();
                 ftpClient.logout();
                 ftpClient.disconnect();
             }

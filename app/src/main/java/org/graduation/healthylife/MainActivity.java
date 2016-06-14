@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.graduation.R;
-import org.graduation.collector.ContactCollector;
+import org.graduation.database.DatabaseManager;
 import org.graduation.database.SharedPreferenceManager;
 import org.graduation.service.FeedbackAlarmReceiver;
 import org.graduation.service.GatherAlarmReceiver;
@@ -108,19 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_database) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[] {
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
-                }
-            }
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    dumpDatabase();
+                    if(new FtpUploader().upload()){
+                        DatabaseManager.getDatabaseManager().refresh();
+                    }
                 }
-            }).run();
+            }).start();
             return true;
         }
 
@@ -134,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferenceManager sm=SharedPreferenceManager.getManager();
         sm.put("opened",true);
         sm.put("phoneID",""+(long)(Math.random()*Long.MAX_VALUE));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new ContactCollector().collect();
-            }
-        }).run();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                new ContactCollector().collect();
+//            }
+//        }).run();
     }
     private void prepareServices() {
         alarmManager= (AlarmManager)getSystemService(Context.ALARM_SERVICE);

@@ -122,7 +122,7 @@ public class OptionFragment extends Fragment {
                 sm.put("emotionCnt", emotionCnt);
                 new Thread(new ResultRecord()
                         .setContextParam(getActivity().getApplicationContext())
-                        .setEmotions(happiness, sadness, anger, surprise, fear, disgust)).run();
+                        .setEmotions(happiness, sadness, anger, surprise, fear, disgust)).start();
                 FragmentTransaction ft=getActivity ().getFragmentManager().beginTransaction();
                 ft.replace(R.id.layout_mainpage, new ResultFragment());
                 ft.commit();
