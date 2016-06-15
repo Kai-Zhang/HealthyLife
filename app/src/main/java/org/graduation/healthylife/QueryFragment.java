@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.graduation.R;
 import org.graduation.database.DatabaseManager;
+import org.graduation.database.SharedPreferenceManager;
 
 /**
  * Created by javan on 2016/6/13.
@@ -21,11 +22,13 @@ public class QueryFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.content_query, container, false);
         TextView textView=(TextView)view.findViewById(R.id.emotionTv);
+        TextView idTv=(TextView)view.findViewById(R.id.idTv);
+        idTv.setText("ID:"+SharedPreferenceManager.getManager().getString("phoneID", null));
         String text="";
         Cursor cursor= DatabaseManager.getDatabaseManager().queryEmotion();
         int cnt=1;
         while(cursor.moveToNext()){
-            text+="   "+cnt;
+            text+="  "+cnt;
             for(int i=1;i<=6;i++){
                 text+="     ";
                 int emotion=cursor.getInt(i);
