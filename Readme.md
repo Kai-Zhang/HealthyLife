@@ -1,6 +1,8 @@
 HealthyLife
 ====
 
+<img src="https://cloud.githubusercontent.com/assets/10338754/16071720/7fe01470-330f-11e6-92b2-74eb170c6208.png">
+
 本项目是一个基于安卓手机数据来预测用户情绪的工具，目前仓库中版本是用于收集数据的Demo。  
 这一项目用于我的本科毕业设计。
 
@@ -12,6 +14,7 @@ HealthyLife
 * 应用其他时间运行在后台，不会产生打扰。请不要使用各种手机管理软件改变应用的运行环境，也不要再次从设置中调整软件的权限。
 * 收集阶段持续若干天，结束后，在主界面点击选项选择准备数据库，收集数据的数据库会被复制到sd存储卡根目录下。然后可以提取出发送给我。
 * 从[这里](https://github.com/Kai-Zhang/HealthyLife/releases/download/v1.1.1/app-release.apk)下载安装包安装在手机上。
+* 
 
 ## 声明
 * 本应用目前收集：
