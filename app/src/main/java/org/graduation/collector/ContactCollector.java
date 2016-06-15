@@ -50,8 +50,11 @@ public class ContactCollector {
         Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,PHONES_PROJECTION, null, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
         DatabaseManager databaseManager=DatabaseManager.getDatabaseManager();
         SQLiteDatabase db=databaseManager.getDatabase();
+        db.beginTransaction();
+        db.execSQL("delete from contacts");
+        db.execSQL("delete from calls");
+        db.execSQL("delete from sms");
         if (phoneCursor != null) {
-            db.beginTransaction();
             while (phoneCursor.moveToNext()) {
                 //得到手机号码
                 String phoneNumber = phoneCursor.getString(PHONES_NUMBER_INDEX);
@@ -94,6 +97,6 @@ public class ContactCollector {
             databaseManager.saveSms(date,address,type);
         }
         db.setTransactionSuccessful();
-        db.endTransaction();;
+        db.endTransaction();
     }
 }
