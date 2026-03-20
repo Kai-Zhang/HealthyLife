@@ -23,7 +23,7 @@ HealthyLife
 * (4) 南孚5号电池12粒装
 * (5) 金士顿16G TF(Micro SD)高速存储卡
 * 
-* 联系人：张啸  QQ：935511561，注明：“参与APP测试”； 邮箱：tobexiao1@dislab.nju.edu.cn
+*
 
 
 ## 声明
